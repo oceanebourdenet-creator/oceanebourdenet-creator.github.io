@@ -1,0 +1,187 @@
+---
+// Accueil en une seule page : tout le profil en un défilement (brief 4.2).
+import Base from '../layouts/Base.astro';
+import Card from '../components/Card.astro';
+import SerieCard from '../components/SerieCard.astro';
+import Lecteur from '../components/Lecteur.astro';
+import { Image } from 'astro:assets';
+import { getEntry } from 'astro:content';
+import photo from '../assets/photo.jpg';
+import { categories } from '../config/categories';
+import { site } from '../config/site';
+import { plusDe, periode, anneeDebut } from '../lib/format';
+import { publications, series, coulissesDe, entrees } from '../lib/publications';
+
+const cv = (await getEntry('cv', 'cv'))!.data;
+const pubs = await publications();
+const toutesSeries = await series();
+
+// Publications phares : fiches et séries, dans l'ordre du champ `phare`
+const phares = [
+  ...pubs.filter((p) => p.data.phare && !p.data.serie).map((p) => ({ ordre: p.data.phare!, type: 'publication' as const, p })),
+  ...[...toutesSeries.values()].filter((s) => s.data.phare).map((s) => ({
+    ordre: s.data.phare!, type: 'serie' as const, serie: s,
+    episodes: pubs.filter((p) => p.data.serie?.id === s.id).sort((a, b) => a.data.date.getTime() - b.data.date.getTime()),
+  })),
+].sort((a, b) => a.ordre - b.ordre);
+
+// Nombre de publications par catégorie (une série compte pour une)
+const parCategorie = categories
+  .map((c) => ({ c, n: entrees(pubs.filter((p) => p.data.categorie === c.slug), toutesSeries).length }))
+  .filter((x) => x.n);
+
+// Chiffres cumulés (uniquement les fiches dont l'affichage est activé)
+const affiches = pubs.filter((p) => p.data.afficherChiffres && p.data.plateforme === 'instagram');
+const vues = affiches.reduce((t, p) => t + (p.data.vues ?? 0), 0);
+const likes = affiches.reduce((t, p) => t + (p.data.likes ?? 0), 0);
+const annees = new Date().getFullYear() - Math.min(...cv.experiences.map((x) => anneeDebut(x.debut)));
+const redactions = cv.experiences.filter((x) => x.logo);
+---
+<Base title={`${cv.profil.nom}, ${cv.profil.titre.toLowerCase()}`} description={`Portfolio de ${cv.profil.nom}, ${cv.profil.titre.toLowerCase()} : ${cv.profil.accroche}`} page="accueil">
+  <section class="hero">
+    <div class="wrap">
+      <div>
+        <p class="eyebrow">{cv.profil.titre} · {cv.profil.ville}</p>
+        <h1>{cv.profil.nom.split(' ')[0]} <em>{cv.profil.nom.split(' ').slice(1).join(' ')}</em></h1>
+        <p class="hero-hook">{cv.profil.accroche}</p>
+        <div class="hero-actions">
+          <a class="btn" href="/publications/">Voir les publications</a>
+          <ul class="socials" aria-label="Réseaux">
+            {cv.profil.reseaux.map((r) => <li><a href={r.url} target="_blank" rel="noopener noreferrer">{r.nom} ↗</a></li>)}
+          </ul>
+        </div>
+      </div>
+      <div class="photo">
+        <Image src={photo} alt={`${cv.profil.nom} en reportage, caméra en main, avec un badge Presse`} widths={[300, 600]} sizes="(max-width: 680px) 104px, 300px" format="webp" loading="eager" />
+      </div>
+    </div>
+  </section>
+
+  <section class="medias" aria-label="Médias">
+    <div class="wrap">
+      <p>J'ai travaillé pour</p>
+      <ul class="logos">
+        {redactions.map((x) => <li><Image src={x.logo!} alt={x.media} height={30} class="logo-media" /></li>)}
+      </ul>
+    </div>
+  </section>
+
+  <section class="section" id="publications" aria-labelledby="t-phares">
+    <div class="wrap">
+      <div class="section-head">
+        <div>
+          <h2 id="t-phares">Publications phares</h2>
+          <p>Une sélection de vidéos et d'articles. Je réalise mes vidéos de A à Z : {site.roleParDefaut}.</p>
+        </div>
+        <div class="rail-nav">
+          <button class="rail-btn" type="button" data-rail="-1" aria-label="Publications précédentes" aria-controls="phares">←</button>
+          <button class="rail-btn" type="button" data-rail="1" aria-label="Publications suivantes" aria-controls="phares">→</button>
+          <a class="more" href="/publications/">Voir toutes les publications</a>
+        </div>
+      </div>
+      <ul class="catlinks" aria-label="Catégories">
+        {parCategorie.map(({ c, n }) => <li><a href={`/publications/${c.slug}/`}>{c.libelle} · {n}</a></li>)}
+      </ul>
+      <div class="rail" id="phares" tabindex="0" aria-label="Publications phares, faire défiler horizontalement" data-suite>
+        {phares.map((e) => e.type === 'serie'
+          ? <SerieCard serie={e.serie} episodes={e.episodes} />
+          : <Card p={e.p} seq="page" coulisses={!!coulissesDe(e.p, toutesSeries)} />)}
+      </div>
+    </div>
+  </section>
+
+  <section class="section" id="methode" aria-labelledby="t-methode">
+    <div class="wrap">
+      <div class="section-head">
+        <div>
+          <h2 id="t-methode">{cv.methode.titre}</h2>
+          {cv.methode.sousTitre && <p class="sub">{cv.methode.sousTitre}</p>}
+          {cv.methode.intro && <p>{cv.methode.intro}</p>}
+        </div>
+      </div>
+      <ol class="steps">
+        {cv.methode.etapes.map((e) => <li><h3>{e.titre}</h3><p>{e.texte}</p>{e.outils && <small>{e.outils}</small>}</li>)}
+      </ol>
+    </div>
+  </section>
+
+  <section class="section" aria-labelledby="t-chiffres">
+    <div class="wrap">
+      <div class="section-head"><h2 id="t-chiffres">En chiffres</h2></div>
+      <ul class="kpis">
+        {vues > 0 && <li><strong>+ {plusDe(vues)}</strong><span>vues cumulées sur Instagram</span></li>}
+        {likes > 0 && <li><strong>+ {plusDe(likes)}</strong><span>j'aime cumulés sur Instagram</span></li>}
+        <li><strong>{annees}</strong><span>ans d'expérience en rédaction</span></li>
+        <li><strong>{redactions.length}</strong><span>rédactions, en France, au Liban et en Égypte</span></li>
+      </ul>
+      <p class="kpis-note">Chiffres publics relevés en octobre 2026, uniquement pour les publications où l'affichage est activé.</p>
+    </div>
+  </section>
+
+  <section class="section" aria-labelledby="t-parcours">
+    <div class="wrap">
+      <div class="section-head"><h2 id="t-parcours">Parcours en bref</h2></div>
+      <div class="brief">
+        <ul class="xp-list">
+          {cv.experiences.map((x) => (
+            <li>
+              <span class="xp-date">{periode(x.debut, x.fin, true)}</span>
+              <div>
+                {x.logo ? <Image class="xp-logo" src={x.logo} alt={x.media} height={26} /> : <p class="xp-media">{x.media}</p>}
+                <p class="xp-role">{x.poste} · {x.type} · {x.lieu}</p>
+              </div>
+            </li>
+          ))}
+        </ul>
+        <div class="keyskills">
+          <h3>Compétences clés</h3>
+          <ul>{cv.competencesCles.map((c) => <li>{c}</li>)}</ul>
+          <h3>Langues</h3>
+          <ul>{cv.langues.map((l) => <li>{l.langue} {l.niveau}</li>)}</ul>
+          <div class="brief-actions">
+            <a class="btn btn--ghost" href="/cv/">Voir le CV complet</a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section" id="contact" aria-labelledby="t-contact">
+    <div class="wrap contact">
+      <div class="contact-intro">
+        <h2 id="t-contact">Contact</h2>
+        <p>Pour un poste, une pige ou une proposition de sujet, écrivez-moi avec ce formulaire. Je réponds sous quelques jours.</p>
+      </div>
+      <form class="form" method="POST" action={site.formspree ? `https://formspree.io/f/${site.formspree}` : undefined}>
+        <div class="row">
+          <label for="c-nom">Nom<input id="c-nom" name="nom" autocomplete="name" required /></label>
+          <label for="c-mail">E-mail<input id="c-mail" name="email" type="email" autocomplete="email" required /></label>
+        </div>
+        <label for="c-msg">Message<textarea id="c-msg" name="message" required></textarea></label>
+        <button class="btn" type="submit" disabled={!site.formspree}>Envoyer</button>
+        <p class="form-note">{site.formspree ? 'Votre adresse sert uniquement à vous répondre.' : 'Le formulaire sera actif une fois relié à Formspree.'}</p>
+      </form>
+    </div>
+  </section>
+
+  <Lecteur pubs={pubs} series={toutesSeries} />
+</Base>
+
+<script>
+  // Flèches du carrousel : défilement d'une carte, désactivées aux extrémités
+  const rail = document.getElementById('phares');
+  const fleches = document.querySelectorAll<HTMLButtonElement>('[data-rail]');
+  if (rail && fleches.length === 2) {
+    const maj = () => {
+      fleches[0].disabled = rail.scrollLeft < 8;
+      fleches[1].disabled = rail.scrollLeft + rail.clientWidth > rail.scrollWidth - 8;
+    };
+    fleches.forEach((b) => b.addEventListener('click', () => {
+      const carte = rail.querySelector('.card');
+      const pas = (carte?.getBoundingClientRect().width ?? 300) + 28;
+      rail.scrollBy({ left: pas * Number(b.dataset.rail), behavior: matchMedia('(prefers-reduced-motion: reduce)').matches ? 'auto' : 'smooth' });
+    }));
+    rail.addEventListener('scroll', maj, { passive: true });
+    maj();
+  }
+</script>

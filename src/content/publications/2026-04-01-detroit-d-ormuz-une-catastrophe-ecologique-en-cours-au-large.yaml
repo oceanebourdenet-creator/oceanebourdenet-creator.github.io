@@ -1,0 +1,20 @@
+titre: "Détroit d'Ormuz : une catastrophe écologique en cours au large de l'Iran ? Ces images satellite interpellent"
+media: "TV5MONDE"
+date: 2026-04-01
+url: "https://information.tv5monde.com/international/detroit-dormuz-une-catastrophe-ecologique-en-cours-au-large-de-liran-ces-images-satellite-interpellent-2818677"
+categorie: "enquetes-osint"
+format: "article"
+phare: 5
+accroche: "Des photos prises par satellite montrent l'apparition de nappes sombres à la surface de la mer dans le détroit d'Ormuz, depuis le début de la guerre déclenchée par les États-Unis et Israël contre l'Iran."
+coulisses:
+  - "J'ai récupéré les images satellites sur Copernicus."
+  - "J'ai construit un comparatif avant / après sur Flourish."
+  - "J'ai interviewé la géographe Isabella Damiani pour décrypter les images."
+image: "../../assets/publications/tv5-2818677.jpg"
+competences:
+  techniques:
+    - "satellite"
+    - "dataviz"
+    - "interview"
+  humaines:
+    - "rigueur"

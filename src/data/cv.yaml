@@ -1,0 +1,251 @@
+# CV d'Océane Bourdenet : toute la page CV est générée à partir de ce fichier.
+profil:
+  nom: "Océane Bourdenet"
+  titre: "Journaliste vidéo et web"
+  ville: "Paris"
+  accroche: "Enquêtes en sources ouvertes, reportages et témoignages pour les réseaux sociaux, entre Paris, Beyrouth et la Martinique."
+  resume: "Formée à l'ESJ Lille et à Sciences Po Lille, j'ai travaillé pour TV5MONDE, France-Antilles, L'Orient-Le Jour et l'AFP, entre Paris, la Martinique, Beyrouth et Le Caire. Je porte mes sujets de l'idée à la publication : angle, recherches, script, contact des sources, tournage, montage, motion design sur After Effects."
+  reseaux:
+    -
+      nom: "LinkedIn"
+      url: "https://fr.linkedin.com/in/oc%C3%A9ane-bourdenet-6babb7200"
+experiences:
+  -
+    media: "Journaliste pigiste"
+    poste: "Piges pour TV5MONDE"
+    type: "Indépendante"
+    lieu: "Paris"
+    debut: "2026-09"
+    fin: "aujourd'hui"
+    description: "Sujets vidéo et web proposés et réalisés pour TV5MONDE."
+  -
+    media: "TV5MONDE"
+    logo: "../assets/logos/tv5monde.svg"
+    pageAuteur: "https://information.tv5monde.com/auteur/oceane-bourdenet/556"
+    poste: "Journaliste vidéo / web"
+    type: "Alternance"
+    lieu: "Paris"
+    debut: "2025-09"
+    fin: "2026-09"
+    description: "Vidéos courtes pour les réseaux sociaux et articles web pour la rédaction numérique."
+  -
+    media: "France-Antilles"
+    logo: "../assets/logos/franceantilles.png"
+    poste: "Journaliste vidéo"
+    type: "CDD"
+    lieu: "Martinique"
+    debut: "2025-07"
+    fin: "2025-09"
+    description: "Reportages vidéo pour le site et les réseaux sociaux du quotidien."
+  -
+    media: "AFP"
+    logo: "../assets/logos/afp.svg"
+    poste: "Journaliste d'agence"
+    type: "Stage d'un mois"
+    lieu: "Le Caire, Égypte"
+    debut: "2024-01"
+    fin: "2024-01"
+    description: "Rédaction de dépêches au bureau du Caire."
+  -
+    media: "L'Orient-Le Jour"
+    logo: "../assets/logos/lorientlejour.svg"
+    pageAuteur: "https://www.lorientlejour.com/author/9702-oceane-bourdenet"
+    poste: "Service vidéo et service économie"
+    type: "Stage"
+    lieu: "Beyrouth, Liban"
+    debut: "2023-02"
+    fin: "2023-06"
+    description: "Vidéos pour les réseaux sociaux et articles pour le service économie."
+formations:
+  -
+    etablissement: "ESJ Lille et Sciences Po Lille"
+    logos:
+      - "../assets/logos/esj.svg"
+      - "../assets/logos/sciencespo.svg"
+    diplome: "Master de journalisme, spécialité internationale"
+    debut: "2024-09"
+    fin: "2026-06"
+    description: "Vidéo, OSINT, cours d'arabe."
+  -
+    etablissement: "École Supérieure de Journalisme de Lille (ESJ Lille) - Université de Lille"
+    logos:
+      - "../assets/logos/esj.svg"
+    diplome: "DEUG Économie-Gestion, option journalisme"
+    debut: "2023-09"
+    fin: "2024-06"
+  -
+    etablissement: "École Supérieure de Journalisme de Lille (ESJ Lille) - Université de Lille"
+    logos:
+      - "../assets/logos/esj.svg"
+    diplome: "Licence de science politique, option journalisme, mention Bien"
+    debut: "2020-09"
+    fin: "2023-06"
+    echange:
+      titre: "Échange universitaire"
+      etablissement: "Université Saint-Joseph de Beyrouth (Liban)"
+      logos:
+        - "../assets/logos/usj.jpg"
+      debut: "2022-09"
+      fin: "2023-06"
+competences:
+  phares:
+    -
+      titre: "Enquête en sources ouvertes"
+      cle: "osint"
+      texte: "Images satellites, géolocalisation, recoupements : je vérifie ce que montrent les images avant de les publier."
+      exemple:
+        titre: "Iran : les images satellites des sites nucléaires"
+        url: "https://www.instagram.com/reel/DYSfkk2s8gN/"
+    -
+      titre: "Motion design"
+      cle: "motion"
+      texte: "Cartes, chiffres et titres animés sur After Effects pour rendre un sujet lisible en quelques secondes."
+      exemple:
+        titre: "Mauritanie : le « train du désert »"
+        url: "https://www.instagram.com/reel/DSM2egujY-F/"
+    -
+      titre: "Tournage et montage"
+      cle: "tournage"
+      texte: "Caméra ou smartphone selon le terrain, puis un montage pensé pour le format vertical et le visionnage sans le son."
+      exemple:
+        titre: "Les supporters après France-Espagne"
+        url: "https://www.instagram.com/reel/DazpijzN3LA/"
+  groupes:
+    -
+      groupe: "Recherche et enquête"
+      items:
+        -
+          nom: "OSINT"
+          cle: "osint"
+        -
+          nom: "Images satellites (Copernicus, Airbus Pléiades)"
+          cle: "satellite"
+        -
+          nom: "Vérification d'images et de documents"
+          cle: "verif"
+        -
+          nom: "Collecte de données"
+          cle: "donnees"
+        -
+          nom: "Recherche d'archives"
+          cle: "archives"
+    -
+      groupe: "Tournage"
+      items:
+        -
+          nom: "Tournage"
+          cle: "tournage"
+        -
+          nom: "Interview"
+          cle: "interview"
+        -
+          nom: "Incarnation face caméra"
+          cle: "incarnation"
+        -
+          nom: "Journalisme mobile"
+          cle: "mojo"
+        -
+          nom: "Prise de son"
+      materiel:
+        - "Sony α7"
+        - "Panasonic GH5"
+        - "Kit Mojo"
+        - "Drone · brevet catégorie ouverte A1/A3"
+    -
+      groupe: "Montage et habillage"
+      items:
+        -
+          nom: "Montage Premiere Pro"
+          cle: "montage"
+        -
+          nom: "Motion design After Effects"
+          cle: "motion"
+        -
+          nom: "Sous-titrage"
+          cle: "soustitrage"
+        -
+          nom: "Photoshop"
+          cle: "photoshop"
+    -
+      groupe: "Écriture et publication"
+      items:
+        -
+          nom: "Script vidéo"
+          cle: "script"
+        -
+          nom: "Écriture web"
+          cle: "ecriture"
+        -
+          nom: "Référencement SEO"
+          cle: "seo"
+        -
+          nom: "Data visualisation (Flourish)"
+          cle: "dataviz"
+        -
+          nom: "Cartographie"
+          cle: "carto"
+        -
+          nom: "WordPress"
+langues:
+  -
+    langue: "Anglais"
+    niveau: "C1"
+  -
+    langue: "Arabe classique"
+    niveau: "B1"
+  -
+    langue: "Arabe libanais"
+    niveau: "A2"
+engagement:
+  -
+    structure: "Pangéa Lille"
+    logo: "../assets/logos/pangea.jpg"
+    lien:
+      libelle: "Voir Pangéa sur Instagram"
+      url: "https://www.instagram.com/pangeaassociation/"
+    role: "Présidente"
+    debut: "2023-09"
+    fin: "2026-09"
+    description: "Association pour l'intégration des étudiants en exil."
+    missions:
+      - "Gestion financière de l'association"
+      - "Création de cours de français"
+      - "Suivi administratif des dossiers des étudiants en exil"
+      - "Demandes de subventions auprès des collectivités, de la Région et des universités"
+# Compétences clés affichées dans « Parcours en bref » sur l'accueil
+competencesCles:
+  - "OSINT et vérification"
+  - "Tournage α7 · GH5"
+  - "Montage Premiere Pro"
+  - "Motion design After Effects"
+  - "Référencement SEO"
+  - "Journalisme mobile"
+  - "Drone A1/A3"
+  - "Data viz Flourish"
+# Section « De l'idée à la publication » de l'accueil
+methode:
+  titre: "De l'idée à la publication"
+  sousTitre: "en passant par le tournage et le montage"
+  intro: "Sur chaque sujet, je fais tout, seule ou avec la rédaction."
+  etapes:
+    - titre: "Le sujet et l'angle"
+      texte: "Je repère ce qui circule en ligne et sur le terrain, et je cherche ce qui n'a pas encore été raconté."
+    - titre: "Les recherches"
+      texte: "Sources ouvertes, images satellites, données : je vérifie avant d'écrire."
+      outils: "OSINT"
+    - titre: "Le script"
+      texte: "J'écris un récit court, pensé pour le format vertical et un visionnage sans le son."
+    - titre: "Les sources"
+      texte: "Je contacte les personnes à interroger et je prépare les entretiens."
+    - titre: "Le tournage"
+      texte: "Caméra ou smartphone selon le terrain, prise de son comprise."
+      outils: "Sony α7 · Panasonic GH5 · kit Mojo · drone"
+    - titre: "Le montage"
+      texte: "Rythme, sous-titres, habillage."
+      outils: "Premiere Pro"
+    - titre: "Le motion design"
+      texte: "Cartes, chiffres et titres animés."
+      outils: "After Effects"
+    - titre: "La publication"
+      texte: "Une version par plateforme, avec un titre, une légende et des mots-clés pensés pour le référencement."
+      outils: "SEO · Instagram · TikTok · YouTube · WordPress"

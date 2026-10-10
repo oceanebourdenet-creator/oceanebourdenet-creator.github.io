@@ -1,0 +1,48 @@
+---
+// Carte « série » : plusieurs vidéos d'un même événement en une seule carte.
+import { Image } from 'astro:assets';
+import { categorieParSlug } from '../config/categories';
+import { jourCourt, dateLongue, isoDate, slug } from '../lib/format';
+import { statsHTML, competencesHTML, ICON_PLAY } from '../lib/html';
+import { toutesCompetences, audience, type Publication, type Serie } from '../lib/publications';
+
+interface Props { serie: Serie; episodes: Publication[] }
+const { serie, episodes } = Astro.props;
+const s = serie.data;
+const cat = categorieParSlug[s.categorie];
+const first = episodes[0], last = episodes[episodes.length - 1];
+const affiches = episodes.filter((p) => p.data.afficherChiffres);
+const somme = (k: 'vues' | 'likes' | 'commentaires' | 'partages') => affiches.reduce((t, p) => t + (p.data[k] ?? 0), 0);
+const techniques = [...new Set(episodes.flatMap((p) => p.data.competences.techniques))].slice(0, 3);
+const humaines = [...new Set(episodes.flatMap((p) => p.data.competences.humaines))].slice(0, 2);
+const seq = `serie:${serie.id}`;
+---
+<article
+  class="card card--serie"
+  data-entree
+  data-categorie={s.categorie}
+  data-media={slug(s.media)}
+  data-format="video"
+  data-competences={[...new Set(episodes.flatMap(toutesCompetences))].join(' ')}
+  data-date={isoDate(last.data.date)}
+  data-audience={episodes.reduce((t, p) => t + audience(p), 0)}
+>
+  <div class="card-media">
+    {first.data.image && <Image src={first.data.image} alt="" widths={[400, 720]} sizes="(max-width: 680px) 82vw, 380px" format="webp" />}
+    <span class="badge">Série · {episodes.length} vidéos</span>
+    <span class="serie-stack" aria-hidden="true">
+      {episodes.slice(1, 4).map((p) => p.data.image && <Image src={p.data.image} alt="" width={96} format="webp" />)}
+    </span>
+    <button class="play" type="button" data-play={first.id} data-seq={seq}><Fragment set:html={ICON_PLAY} /><span>Voir les {episodes.length} vidéos</span></button>
+  </div>
+  <div class="card-body">
+    <p class="card-cat">{cat.libelle}</p>
+    <h3 class="card-title"><a href="#" data-play={first.id} data-seq={seq}>{s.titre}</a></h3>
+    <p class="card-hook">{s.accroche}</p>
+    <p class="card-meta"><b>{s.media}</b><span>·</span><span>{jourCourt(first.data.date)} – {dateLongue(last.data.date)}</span><span>·</span><span>Série</span></p>
+    <Fragment set:html={statsHTML({ vues: somme('vues'), likes: somme('likes'), commentaires: somme('commentaires'), partages: somme('partages'), dateChiffres: affiches[0]?.data.dateChiffres })} />
+    <Fragment set:html={competencesHTML([...techniques, ...humaines])} />
+    {s.coulisses && <button class="coulisses-btn" type="button" data-play={first.id} data-seq={seq}>Les coulisses <span aria-hidden="true">→</span></button>}
+    <p class="card-out">Voir les {episodes.length} vidéos <span aria-hidden="true">→</span></p>
+  </div>
+</article>

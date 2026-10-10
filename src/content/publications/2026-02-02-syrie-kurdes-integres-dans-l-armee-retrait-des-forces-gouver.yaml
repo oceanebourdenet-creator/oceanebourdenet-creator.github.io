@@ -1,0 +1,15 @@
+titre: "Syrie : Kurdes intégrés dans l'armée, retrait des forces gouvernementales… Ce que prévoit l'accord entre les deux parties"
+media: "TV5MONDE"
+date: 2026-02-02
+url: "https://information.tv5monde.com/international/syrie-kurdes-integres-dans-larmee-retrait-des-forces-gouvernementales-ce-que-prevoit-laccord-entre-les-deux-parties-2808039"
+categorie: "enquetes-osint"
+format: "article"
+accroche: "Les enjeux de l'accord entre le gouvernement d'Al-Charaa et les Forces démocratiques syriennes (FDS), à majorité kurde, expliqués avec une carte."
+coulisses: "Pour comprendre les enjeux de l'accord entre le gouvernement d'Al-Charaa et les Forces démocratiques syriennes, à majorité kurde, j'ai réalisé une carte interactive à partir de données en sources ouvertes."
+image: "../../assets/publications/tv5-2808039.jpg"
+competences:
+  techniques:
+    - "carto"
+    - "osint"
+  humaines:
+    - "pedagogie"

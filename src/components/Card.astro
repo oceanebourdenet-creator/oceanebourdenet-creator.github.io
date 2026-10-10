@@ -1,0 +1,70 @@
+---
+// Carte de prévisualisation d'une publication (brief 5.3).
+import { Image } from 'astro:assets';
+import { categorieParSlug } from '../config/categories';
+import { site } from '../config/site';
+import { dateLongue, isoDate, slug } from '../lib/format';
+import { statsHTML, competencesHTML, ICON_PLAY } from '../lib/html';
+import { FORMATS, PLATEFORMES, toutesCompetences, lienDe, audience, type Publication } from '../lib/publications';
+
+interface Props { p: Publication; seq: string; coulisses: boolean }
+const { p, seq, coulisses } = Astro.props;
+const d = p.data;
+const cat = categorieParSlug[d.categorie];
+const plat = d.plateforme ? PLATEFORMES[d.plateforme] : undefined;
+const lien = lienDe(p);
+const sortie = lien.archive ? 'Version archivée' : plat ? `Voir sur ${plat}` : `Lire sur ${d.media}`;
+const large = d.plateforme === 'youtube' && !d.vertical;
+const teinte = [...d.url].reduce((h, c) => h + c.charCodeAt(0), 0) % 4;
+const competencesAffichees = [...d.competences.techniques, ...d.competences.humaines];
+---
+<article
+  class:list={['card', { 'card--mort': !lien.href }]}
+  data-entree
+  data-categorie={d.categorie}
+  data-media={slug(d.media)}
+  data-format={d.format}
+  data-competences={toutesCompetences(p).join(' ')}
+  data-date={isoDate(d.date)}
+  data-audience={audience(p)}
+  data-id={p.id}
+>
+  <div class:list={['card-media', { 'card-media--wide': large }]}>
+    {d.image ? (
+      large ? (
+        <>
+          <Image class="bg" src={d.image} alt="" width={480} format="webp" aria-hidden="true" />
+          <Image class="fg" src={d.image} alt="" widths={[400, 720]} sizes="(max-width: 680px) 82vw, 380px" format="webp" />
+        </>
+      ) : (
+        <Image src={d.image} alt="" widths={[400, 720]} sizes="(max-width: 680px) 82vw, 380px" format="webp" />
+      )
+    ) : (
+      <div class="card-fallback" data-teinte={teinte} aria-hidden="true">
+        <small>{FORMATS[d.format]} · {cat.libelle}</small>
+        <b>{d.media}</b>
+      </div>
+    )}
+    <span class="badge">{plat ?? FORMATS[d.format]}{d.duree && ` · ${d.duree}`}</span>
+    {d.embed && (
+      <button class="play" type="button" data-play={p.id} data-seq={seq}>
+        <Fragment set:html={ICON_PLAY} /><span>Afficher la vidéo {plat}</span>
+      </button>
+    )}
+  </div>
+  <div class="card-body">
+    <p class="card-cat">{cat.libelle}</p>
+    <h3 class="card-title">
+      {lien.href ? <a href={lien.href} target="_blank" rel="noopener noreferrer">{d.titre}</a> : d.titre}
+    </h3>
+    <p class="card-hook">{d.accroche}</p>
+    {d.role && d.role !== site.roleParDefaut && <p class="card-role"><span>Mon rôle</span> {d.role}</p>}
+    <p class="card-meta"><b>{d.media}</b><span>·</span><time datetime={isoDate(d.date)}>{dateLongue(d.date)}</time><span>·</span><span>{FORMATS[d.format]}</span></p>
+    {d.afficherChiffres && <Fragment set:html={statsHTML(d)} />}
+    <Fragment set:html={competencesHTML(competencesAffichees)} />
+    {coulisses && <button class="coulisses-btn" type="button" data-play={p.id} data-seq={seq}>Les coulisses <span aria-hidden="true">→</span></button>}
+    {lien.href
+      ? <p class="card-out">{sortie} <span aria-hidden="true">↗</span><span class="sr"> (nouvel onglet)</span></p>
+      : <p class="card-etat">Article plus disponible en ligne</p>}
+  </div>
+</article>

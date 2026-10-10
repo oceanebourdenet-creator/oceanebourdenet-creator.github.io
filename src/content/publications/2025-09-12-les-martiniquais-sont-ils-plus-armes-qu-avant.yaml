@@ -1,0 +1,21 @@
+titre: "Les Martiniquais sont-ils plus armés qu'avant ?"
+media: "France-Antilles"
+date: 2025-09-12
+url: "https://www.martinique.franceantilles.fr/actualite/faitsdivers/les-martiniquais-sont-ils-plus-armes-quavant-1050020.php"
+categorie: "enquetes-osint"
+format: "article"
+phare: 8
+accroche: "150 nouveaux détenteurs d'armes enregistrés depuis janvier par la préfecture : une hausse de 9 % en six mois, qui se traduit aussi par une plus grande fréquentation des stands de tir sportif."
+coulisses:
+  - "J'ai collecté les données sur les sites du ministère de l'Intérieur et du ministère des Outre-mer."
+  - "J'ai mené des interviews sur le terrain, dans des stands de tir et auprès de vendeurs d'armes."
+  - "J'ai créé une infographie pour comprendre l'évolution du port d'armes en Martinique."
+image: "../../assets/publications/fa-1050020.jpg"
+competences:
+  techniques:
+    - "donnees"
+    - "interview"
+    - "dataviz"
+  humaines:
+    - "tenacite"
+    - "rigueur"

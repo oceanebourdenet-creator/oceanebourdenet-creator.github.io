@@ -1,0 +1,31 @@
+# Modèle de fiche (ignoré par le site car son nom commence par « _ »).
+# Pour ajouter une publication : dupliquer ce fichier, le renommer « AAAA-MM-JJ-titre-court.yaml »,
+# puis remplir les champs. Les lignes commençant par « # » sont des commentaires.
+
+titre: "Titre de la publication"
+media: "TV5MONDE"                      # nom du média, écrit comme dans le CV
+date: 2026-10-01                       # date de publication AAAA-MM-JJ
+url: "https://…"                       # lien vers la publication d'origine
+# archive: "https://web.archive.org/…" # lien de secours (Wayback Machine)
+categorie: "reportages"                # enquetes-osint, tendances, reportages, mini-documentaires, temoignages
+format: "video"                        # video, article, reportage, enquete, podcast, interview, autre
+# plateforme: "instagram"              # pour les vidéos : instagram, tiktok, youtube…
+# embed: "Dc3_k3gN5kT"                 # identifiant de la vidéo (dans le lien Instagram après /p/ ou /reel/)
+# vertical: true                       # pour un Short YouTube
+# duree: "1 min 36"
+# serie: tour-des-yoles-2026           # pour regrouper plusieurs vidéos (fichier dans src/content/series/)
+# collaboration: true                  # publication Instagram partagée entre plusieurs comptes
+# phare: 3                             # position dans le carrousel de l'accueil
+accroche: "1 à 2 phrases écrites par vous, pas le chapô du média."
+# coulisses: "Ce que j'ai fait pour réaliser ce sujet, à la première personne."
+# role: "Tournage et montage"          # seulement si différent de « sujet, script, tournage, montage et motion design »
+# image: "../../assets/publications/nom-du-fichier.jpg"   # 1200 px de large maximum, moins de 200 Ko
+# vues: 20700
+# likes: 310
+# commentaires: 4
+# dateChiffres: 2026-10-10             # obligatoire dès qu'un chiffre est renseigné
+# sourceChiffres: "public"             # public (relevé sur la plateforme) ou media (statistiques du média)
+afficherChiffres: false
+competences:
+  techniques: []                       # clés de src/config/competences.ts, ex. ["interview", "montage"]
+  humaines: []                         # ex. ["rigueur", "empathie"]

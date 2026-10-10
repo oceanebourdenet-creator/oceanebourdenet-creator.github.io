@@ -1,1 +1,24 @@
+# Build et types générés
+dist/
+.astro/
+
+# Dépendances
+node_modules/
+
+# Logs
+npm-debug.log*
+
+# Variables d'environnement
+.env
+.env.*
+
+# Fichiers lourds interdits dans le dépôt (brief 12.1)
+*.mp4
+*.mov
+*.mp3
+*.wav
+archives/
+
+# Système
 .DS_Store
+.idea/

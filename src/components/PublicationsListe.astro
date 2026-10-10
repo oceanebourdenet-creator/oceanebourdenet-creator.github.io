@@ -1,0 +1,199 @@
+---
+// Liste des publications avec onglets de catégorie (liens vers /publications/[categorie]/),
+// filtres secondaires, tri et repères par année. Sans JavaScript, toutes les cartes restent affichées.
+import Card from './Card.astro';
+import SerieCard from './SerieCard.astro';
+import Lecteur from './Lecteur.astro';
+import { Image } from 'astro:assets';
+import { getEntry } from 'astro:content';
+import { categories, categorieParSlug, type CategorieSlug } from '../config/categories';
+import { site } from '../config/site';
+import { libelleCompetence, estTechnique } from '../config/competences';
+import { slug } from '../lib/format';
+import { publications, series, entrees, coulissesDe, toutesCompetences, FORMATS } from '../lib/publications';
+
+interface Props { categorie?: CategorieSlug }
+const { categorie } = Astro.props;
+const cv = (await getEntry('cv', 'cv'))!.data;
+const pubs = await publications();
+const toutesSeries = await series();
+const liste = categorie ? pubs.filter((p) => p.data.categorie === categorie) : pubs;
+const lesEntrees = entrees(liste, toutesSeries);
+
+const onglets = categories
+  .map((c) => ({ ...c, n: entrees(pubs.filter((p) => p.data.categorie === c.slug), toutesSeries).length }))
+  .filter((c) => c.n);
+const total = entrees(pubs, toutesSeries).length;
+
+// Listes des filtres, générées à partir des fiches (brief 5.4)
+const medias = [...new Set(liste.map((p) => p.data.media))].sort((a, b) => a.localeCompare(b, 'fr'));
+const formats = [...new Set(liste.map((p) => p.data.format))];
+const competences = [...new Set(liste.flatMap(toutesCompetences))].sort((a, b) => libelleCompetence(a).localeCompare(libelleCompetence(b), 'fr'));
+
+// Le tri « Plus vues » n'est proposé que si au moins la moitié des vidéos ont des vues affichées
+const videos = liste.filter((p) => p.data.format === 'video');
+const triPossible = videos.length > 0 && videos.filter((p) => p.data.afficherChiffres && p.data.vues).length >= videos.length / 2;
+
+const auteurs = cv.experiences.filter((x) => x.pageAuteur);
+let annee = '';
+---
+<div class="wrap">
+  <header class="page-head">
+    <h1>{categorie ? categorieParSlug[categorie].libelle : 'Publications'}</h1>
+    <p>Vidéos pour les réseaux sociaux et articles. Sauf mention contraire, je réalise mes vidéos de A à Z : {site.roleParDefaut}.</p>
+    {auteurs.length > 0 && (
+      <p class="auteurs-intro">Une sélection de mon travail. Tous mes articles sont sur {auteurs.map((x, i) => (
+        <>{i > 0 && (i === auteurs.length - 1 ? ' et ' : ', ')}<a href={x.pageAuteur} target="_blank" rel="noopener noreferrer">{x.media} ↗</a></>
+      ))}.</p>
+    )}
+  </header>
+
+  <nav class="tabs" aria-label="Catégories">
+    <a href="/publications/" aria-current={!categorie ? 'true' : undefined}>Tout <span>{total}</span></a>
+    {onglets.map((c) => <a href={`/publications/${c.slug}/`} aria-current={categorie === c.slug ? 'true' : undefined}>{c.libelle} <span>{c.n}</span></a>)}
+  </nav>
+  <p class="cat-desc">{categorie ? categorieParSlug[categorie].description : 'Enquêtes, tendances, reportages et témoignages, du plus récent au plus ancien.'}</p>
+
+  <div class="filters" data-filtres hidden>
+    <label for="f-media">Média
+      <select id="f-media" data-filtre="media">
+        <option value="">Tous les médias</option>
+        {medias.map((m) => <option value={slug(m)}>{m}</option>)}
+      </select>
+    </label>
+    <label for="f-format">Format
+      <select id="f-format" data-filtre="format">
+        <option value="">Tous les formats</option>
+        {formats.map((f) => <option value={f}>{FORMATS[f]}</option>)}
+      </select>
+    </label>
+    <label for="f-competence">Compétence
+      <select id="f-competence" data-filtre="competence">
+        <option value="">Toutes les compétences</option>
+        <optgroup label="Techniques">{competences.filter(estTechnique).map((k) => <option value={k}>{libelleCompetence(k)}</option>)}</optgroup>
+        <optgroup label="Humaines">{competences.filter((k) => !estTechnique(k)).map((k) => <option value={k}>{libelleCompetence(k)}</option>)}</optgroup>
+      </select>
+    </label>
+    <button class="reset" type="button" data-reset hidden>Effacer les filtres</button>
+  </div>
+
+  <div class="results-bar">
+    <span class="results-left">
+      <span data-compte role="status">{lesEntrees.length} publication{lesEntrees.length > 1 ? 's' : ''}</span>
+      {triPossible && (
+        <span class="tri" role="group" aria-label="Trier" data-tri-groupe hidden>
+          <button type="button" data-tri="" aria-pressed="true">Plus récentes</button>
+          <button type="button" data-tri="vues" aria-pressed="false">Plus vues</button>
+        </span>
+      )}
+    </span>
+    <span class="legend">Compétences : <span class="sk sk--t">technique</span> <span class="sk sk--h">humaine</span></span>
+  </div>
+
+  <div data-auteurs-haut></div>
+  <div class="grid" data-grille data-suite>
+    {lesEntrees.map((e) => {
+      const y = String(e.date.getUTCFullYear());
+      const titre = y !== annee ? ((annee = y), <h2 class="year" data-annee={y}>{y}</h2>) : null;
+      return (
+        <>
+          {titre}
+          {e.type === 'serie'
+            ? <SerieCard serie={e.serie} episodes={e.episodes} />
+            : <Card p={e.p} seq="page" coulisses={!!coulissesDe(e.p, toutesSeries)} />}
+        </>
+      );
+    })}
+  </div>
+  <p class="empty" data-vide hidden>Aucune publication ne correspond à ces filtres.</p>
+  <div data-auteurs-bas>
+    {auteurs.length > 0 && (
+      <section class="auteurs" aria-labelledby="t-auteurs" data-auteurs>
+        <div class="auteurs-head">
+          <h2 id="t-auteurs">Tous mes articles</h2>
+          <p>Ici, une sélection. L'ensemble de mes articles est publié sur les sites des médias.</p>
+        </div>
+        <ul>
+          {auteurs.map((x) => (
+            <li><a href={x.pageAuteur} target="_blank" rel="noopener noreferrer">
+              {x.logo ? <Image src={x.logo} alt={x.media} height={28} /> : <b>{x.media}</b>}
+              <span>Voir mes articles <span aria-hidden="true">↗</span><span class="sr"> sur {x.media} (nouvel onglet)</span></span>
+            </a></li>
+          ))}
+        </ul>
+      </section>
+    )}
+  </div>
+</div>
+<Lecteur pubs={pubs} series={toutesSeries} />
+
+<script>
+  // Filtres secondaires, tri et compétences cliquables, reflétés dans l'URL (brief 5.4).
+  const grille = document.querySelector<HTMLElement>('[data-grille]');
+  if (grille) {
+    const params = new URLSearchParams(location.search);
+    const etat: Record<string, string> = {
+      media: params.get('media') ?? '', format: params.get('format') ?? '', competence: params.get('competence') ?? '', tri: params.get('tri') ?? '',
+    };
+    const cartes = [...grille.querySelectorAll<HTMLElement>('[data-entree]')];
+    const ordreInitial = [...grille.children];
+    const selects = [...document.querySelectorAll<HTMLSelectElement>('[data-filtre]')];
+    const reset = document.querySelector<HTMLButtonElement>('[data-reset]');
+    const compte = document.querySelector<HTMLElement>('[data-compte]');
+    const vide = document.querySelector<HTMLElement>('[data-vide]');
+    const auteurs = document.querySelector<HTMLElement>('[data-auteurs]');
+    const triGroupe = document.querySelector<HTMLElement>('[data-tri-groupe]');
+    document.querySelector<HTMLElement>('[data-filtres]')!.hidden = false;
+    if (triGroupe) triGroupe.hidden = false; else etat.tri = '';
+
+    function correspond(c: HTMLElement) {
+      return (!etat.media || c.dataset.media === etat.media)
+        && (!etat.format || c.dataset.format === etat.format)
+        && (!etat.competence || (c.dataset.competences ?? '').split(' ').includes(etat.competence));
+    }
+
+    function rendre() {
+      let n = 0;
+      cartes.forEach((c) => { c.hidden = !correspond(c); if (!c.hidden) n++; });
+      // Tri : par vues (les cartes sans vues en fin, par date), sinon ordre d'origine avec les années
+      if (etat.tri === 'vues') {
+        const triees = [...cartes].sort((a, b) => {
+          const va = Number(a.dataset.audience), vb = Number(b.dataset.audience);
+          return Number(vb > 0) - Number(va > 0) || vb - va || (b.dataset.date ?? '').localeCompare(a.dataset.date ?? '');
+        });
+        grille!.replaceChildren(...triees);
+      } else {
+        grille!.replaceChildren(...ordreInitial);
+        grille!.querySelectorAll<HTMLElement>('.year').forEach((h) => {
+          let el = h.nextElementSibling as HTMLElement | null, visible = false;
+          while (el && !el.classList.contains('year')) { if (!el.hidden) visible = true; el = el.nextElementSibling as HTMLElement | null; }
+          h.hidden = !visible;
+        });
+      }
+      if (compte) compte.textContent = `${n} publication${n > 1 ? 's' : ''}`;
+      if (vide) vide.hidden = n > 0;
+      selects.forEach((s) => { s.value = etat[s.dataset.filtre!] ?? ''; });
+      if (reset) reset.hidden = !(etat.media || etat.format || etat.competence);
+      document.querySelectorAll<HTMLElement>('[data-tri]').forEach((b) => b.setAttribute('aria-pressed', String(b.dataset.tri === etat.tri)));
+      // Filtre « Article » : le bloc des pages auteur remonte au-dessus des résultats
+      if (auteurs) document.querySelector(etat.format === 'article' ? '[data-auteurs-haut]' : '[data-auteurs-bas]')!.append(auteurs);
+      const q = new URLSearchParams();
+      Object.entries(etat).forEach(([k, v]) => v && q.set(k, v));
+      history.replaceState(null, '', q.toString() ? `?${q}` : location.pathname);
+    }
+
+    selects.forEach((s) => s.addEventListener('change', () => { etat[s.dataset.filtre!] = s.value; rendre(); }));
+    reset?.addEventListener('click', () => { etat.media = etat.format = etat.competence = ''; rendre(); });
+    document.querySelectorAll<HTMLButtonElement>('[data-tri]').forEach((b) => b.addEventListener('click', () => { etat.tri = b.dataset.tri ?? ''; rendre(); }));
+    // Clic sur une compétence d'une carte : filtre sans recharger la page
+    grille.addEventListener('click', (e) => {
+      const a = (e.target as Element).closest<HTMLAnchorElement>('a.sk[data-competence]');
+      if (!a) return;
+      e.preventDefault();
+      etat.competence = a.dataset.competence ?? '';
+      rendre();
+      document.querySelector('.tabs')?.scrollIntoView({ behavior: matchMedia('(prefers-reduced-motion: reduce)').matches ? 'auto' : 'smooth' });
+    });
+    rendre();
+  }
+</script>

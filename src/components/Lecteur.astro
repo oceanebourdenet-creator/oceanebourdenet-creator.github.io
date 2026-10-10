@@ -1,0 +1,163 @@
+---
+// Lecteur en fenêtre : vidéo intégrée chargée au clic (brief 5.6), coulisses, navigation.
+// Les données des publications sont fournies en JSON ; le script construit la fenêtre à la demande.
+import { getImage } from 'astro:assets';
+import { categorieParSlug } from '../config/categories';
+import { site } from '../config/site';
+import { dateLongue, nombre } from '../lib/format';
+import { esc, statsHTML, competencesHTML, coulissesHTML } from '../lib/html';
+import { FORMATS, PLATEFORMES, coulissesDe, lienDe, type Publication, type Serie } from '../lib/publications';
+
+interface Props { pubs: Publication[]; series: Map<string, Serie> }
+const { pubs, series } = Astro.props;
+
+const donnees: Record<string, unknown> = {};
+for (const p of pubs) {
+  const d = p.data;
+  const plat = d.plateforme ? PLATEFORMES[d.plateforme] : '';
+  const img = d.image ? (await getImage({ src: d.image, width: 720, format: 'webp' })).src : '';
+  const serie = d.serie ? series.get(d.serie.id) : undefined;
+  const lien = lienDe(p);
+  donnees[p.id] = {
+    titre: d.titre,
+    serie: serie?.data.titre ?? '',
+    categorie: categorieParSlug[d.categorie].libelle,
+    plateforme: d.plateforme ?? '',
+    plat,
+    embed: d.embed ?? '',
+    vertical: d.vertical,
+    image: img,
+    media: d.media,
+    lien: lien.href ?? '',
+    archive: lien.archive,
+    meta: `<b>${esc(d.media)}</b><span>·</span><span>${esc(dateLongue(d.date))}</span><span>·</span><span>${esc(FORMATS[d.format])}</span>`,
+    accroche: d.accroche,
+    role: d.role && d.role !== site.roleParDefaut ? d.role : '',
+    coulisses: coulissesHTML(coulissesDe(p, series)),
+    stats: d.afficherChiffres ? statsHTML(d) : '',
+    collab: d.collaboration && d.plateforme === 'instagram' && d.likes
+      ? `Publication en collaboration : le lecteur Instagram n'affiche que les j'aime d'un des comptes. Total : ${nombre(d.likes)} j'aime.` : '',
+    competences: competencesHTML([...d.competences.techniques, ...d.competences.humaines]),
+  };
+}
+// Suites des séries, dans l'ordre chronologique
+const suites: Record<string, string[]> = {};
+for (const id of series.keys()) {
+  suites[`serie:${id}`] = pubs.filter((p) => p.data.serie?.id === id).sort((a, b) => a.data.date.getTime() - b.data.date.getTime()).map((p) => p.id);
+}
+---
+<dialog class="lecteur" aria-labelledby="lecteur-titre">
+  <div class="lecteur-in">
+    <button class="lecteur-fermer" type="button" aria-label="Fermer le lecteur">×</button>
+    <div class="lecteur-video"></div>
+    <div class="lecteur-info"></div>
+  </div>
+</dialog>
+<script type="application/json" id="lecteur-donnees" set:html={JSON.stringify({ donnees, suites })} />
+
+<script>
+  type Fiche = {
+    titre: string; serie: string; categorie: string; plateforme: string; plat: string; embed: string; vertical: boolean;
+    image: string; media: string; lien: string; archive: boolean; meta: string; accroche: string; role: string;
+    coulisses: string; stats: string; collab: string; competences: string;
+  };
+  const brut = document.getElementById('lecteur-donnees');
+  const dlg = document.querySelector<HTMLDialogElement>('dialog.lecteur');
+  if (brut && dlg) {
+    const { donnees, suites } = JSON.parse(brut.textContent || '{}') as { donnees: Record<string, Fiche>; suites: Record<string, string[]> };
+    const esc = (s: string) => s.replace(/[&<>"']/g, (c) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' })[c]!);
+    const video = dlg.querySelector<HTMLElement>('.lecteur-video')!;
+    const info = dlg.querySelector<HTMLElement>('.lecteur-info')!;
+    let liste: string[] = [];
+    let i = 0;
+    let estSerie = false;
+
+    function iframe(f: Fiche) {
+      if (f.plateforme === 'youtube')
+        return `<iframe class="${f.vertical ? 'emb-tt' : 'emb-yt'}" src="https://www.youtube-nocookie.com/embed/${f.embed}?autoplay=1&rel=0" title="Vidéo YouTube" allow="autoplay; encrypted-media; picture-in-picture; fullscreen" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>`;
+      if (f.plateforme === 'tiktok')
+        return `<iframe class="emb-tt" src="https://www.tiktok.com/player/v1/${f.embed}?autoplay=1&rel=0&description=0&music_info=0" title="Vidéo TikTok" allow="autoplay; encrypted-media; fullscreen"></iframe>`;
+      return `<iframe class="emb-ig" src="https://www.instagram.com/p/${f.embed}/embed/" title="Vidéo Instagram" allow="autoplay; encrypted-media; fullscreen" scrolling="no"></iframe>`;
+    }
+
+    function afficher(n: number) {
+      if (!liste.length) return;
+      i = (n + liste.length) % liste.length;
+      const f = donnees[liste[i]];
+      if (!f) return;
+      const large = f.plateforme === 'youtube' && !f.vertical;
+      dlg!.classList.toggle('is-wide', !!f.embed && large);
+      dlg!.classList.toggle('is-article', !f.embed);
+      video.innerHTML = f.embed ? iframe(f)
+        : f.image ? `<div class="card-media lecteur-visuel"><img src="${f.image}" alt=""></div>`
+        : `<div class="card-media lecteur-visuel"><div class="card-fallback"><b>${esc(f.media)}</b></div></div>`;
+      const prev = donnees[liste[(i - 1 + liste.length) % liste.length]];
+      const next = donnees[liste[(i + 1) % liste.length]];
+      const sortie = f.embed ? `Voir sur ${esc(f.plat)}` : f.archive ? 'Lire la version archivée' : `Lire l'article sur ${esc(f.media)}`;
+      info.innerHTML = `
+        <p class="card-cat">${esc(f.categorie)}${f.serie ? ` · ${esc(f.serie)}` : ''}</p>
+        ${estSerie ? `<p class="lecteur-ep">Vidéo ${i + 1} sur ${liste.length}</p>` : ''}
+        <h2 id="lecteur-titre">${esc(f.titre)}</h2>
+        <p class="card-meta">${f.meta}</p>
+        <p class="card-hook">${esc(f.accroche)}</p>
+        ${f.role ? `<p class="card-role"><span>Mon rôle</span> ${esc(f.role)}</p>` : ''}
+        ${f.coulisses}
+        ${f.stats}
+        ${f.collab ? `<p class="note-collab">${esc(f.collab)}</p>` : ''}
+        ${f.competences}
+        ${estSerie ? `<ol class="lecteur-liste">${liste.map((id, j) => {
+          const e = donnees[id];
+          return `<li><button type="button" data-goto="${j}" ${j === i ? 'aria-current="true"' : ''}>${e.image ? `<img src="${e.image}" alt="">` : ''}<span>${esc(e.titre.replace(/^Tour des yoles : /, '').replace(/^./, (c) => c.toUpperCase()))}</span></button></li>`;
+        }).join('')}</ol>` : ''}
+        ${f.embed ? `<p class="third-party">Vidéo intégrée depuis ${esc(f.plat)}, qui peut déposer des cookies.</p>` : ''}
+        ${f.lien ? `<a class="${f.embed ? 'more' : 'btn'}" href="${f.lien}" target="_blank" rel="noopener noreferrer">${sortie} ↗</a>` : ''}
+        ${liste.length > 1 ? `<div class="lecteur-nav">
+          <button type="button" data-nav="-1"><span>← Précédente</span><small>${esc(prev.titre)}</small></button>
+          <button type="button" data-nav="1"><span>Suivante →</span><small>${esc(next.titre)}</small></button>
+        </div>` : ''}`;
+    }
+
+    // Suite « page » : les cartes visibles de la même liste, dans l'ordre affiché (hors séries)
+    function suitePage(depuis: Element): string[] {
+      const racine = depuis.closest('[data-suite]') ?? document;
+      return [...racine.querySelectorAll<HTMLElement>('[data-entree]:not(.card--serie)')]
+        .filter((el) => !el.hidden && el.dataset.id)
+        .map((el) => el.dataset.id!);
+    }
+
+    document.addEventListener('click', (e) => {
+      const b = (e.target as Element).closest<HTMLElement>('[data-play]');
+      if (!b) return;
+      e.preventDefault();
+      const seq = b.dataset.seq || '';
+      estSerie = seq.startsWith('serie:');
+      liste = estSerie ? suites[seq] ?? [] : suitePage(b);
+      afficher(Math.max(0, liste.indexOf(b.dataset.play!)));
+      if (!dlg.open) dlg.showModal();
+    });
+    dlg.addEventListener('click', (e) => {
+      const t = e.target as Element;
+      if (t === dlg || t.closest('.lecteur-fermer')) return dlg.close();
+      const nav = t.closest<HTMLElement>('[data-nav]'), go = t.closest<HTMLElement>('[data-goto]');
+      if (nav) afficher(i + Number(nav.dataset.nav));
+      if (go) afficher(Number(go.dataset.goto));
+    });
+    dlg.addEventListener('keydown', (e) => {
+      if (e.key === 'ArrowRight') afficher(i + 1);
+      if (e.key === 'ArrowLeft') afficher(i - 1);
+    });
+    // À la fermeture, on vide le lecteur pour couper le son
+    dlg.addEventListener('close', () => { video.innerHTML = ''; });
+
+    // Instagram indique la hauteur de son lecteur : on ajuste l'iframe
+    window.addEventListener('message', (e) => {
+      let origine = '';
+      try { origine = new URL(e.origin).hostname; } catch { return; }
+      if (!/(^|\.)instagram\.com$/.test(origine)) return;
+      let d = e.data;
+      try { if (typeof d === 'string') d = JSON.parse(d); } catch { return; }
+      if (d?.type !== 'MEASURE' || !d.details?.height) return;
+      dlg.querySelectorAll<HTMLIFrameElement>('iframe.emb-ig').forEach((f) => { if (f.contentWindow === e.source) f.style.height = `${d.details.height}px`; });
+    });
+  }
+</script>

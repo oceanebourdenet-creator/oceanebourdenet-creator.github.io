@@ -1,0 +1,17 @@
+---
+// Une page par catégorie (brief 5.7), générée seulement si la catégorie contient des publications.
+import Base from '../../layouts/Base.astro';
+import PublicationsListe from '../../components/PublicationsListe.astro';
+import { categories, categorieParSlug, type CategorieSlug } from '../../config/categories';
+import { publications } from '../../lib/publications';
+
+export async function getStaticPaths() {
+  const pubs = await publications();
+  return categories.filter((c) => pubs.some((p) => p.data.categorie === c.slug)).map((c) => ({ params: { categorie: c.slug } }));
+}
+const categorie = Astro.params.categorie as CategorieSlug;
+const c = categorieParSlug[categorie];
+---
+<Base title={`${c.libelle} · Publications · Océane Bourdenet`} description={`${c.libelle} : ${c.description} Publications d'Océane Bourdenet.`} page="publications">
+  <PublicationsListe categorie={categorie} />
+</Base>
