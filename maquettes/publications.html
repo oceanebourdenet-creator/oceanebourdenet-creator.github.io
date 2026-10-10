@@ -1,0 +1,70 @@
+<!doctype html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Publications · Océane Bourdenet</title>
+<meta name="description" content="Toutes les publications d'Océane Bourdenet : enquêtes OSINT, tendances, reportages et témoignages.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Newsreader:ital,opsz,wght@0,6..72,400..700;1,6..72,400..700&family=Schibsted+Grotesk:wght@400..700&display=swap">
+<link rel="stylesheet" href="style.css">
+</head>
+<body data-page="publications">
+<header class="nav">
+  <div class="wrap">
+    <a class="nav-name" href="accueil.html">Océane Bourdenet</a>
+    <nav aria-label="Navigation principale">
+      <ul>
+        <li><a href="publications.html" aria-current="page">Publications</a></li>
+        <li><a href="cv.html">CV</a></li>
+        <li><a href="accueil.html#contact">Contact</a></li>
+      </ul>
+    </nav>
+  </div>
+</header>
+
+<main class="wrap">
+  <header class="page-head">
+    <h1>Publications</h1>
+    <p>Vidéos pour les réseaux sociaux et articles. Sauf mention contraire, je réalise mes vidéos de A à Z : sujet, script, tournage, montage et motion design.</p>
+    <p class="auteurs-intro" id="auteurs-intro"></p>
+  </header>
+
+  <nav class="tabs" id="tabs" aria-label="Catégories"></nav>
+  <p class="cat-desc" id="cat-desc"></p>
+
+  <div class="filters">
+    <label for="f-media">Média<select id="f-media"></select></label>
+    <label for="f-format">Format<select id="f-format"></select></label>
+    <label for="f-competence">Compétence<select id="f-competence"></select></label>
+    <button class="reset" id="reset" type="button" hidden>Effacer les filtres</button>
+  </div>
+
+  <div class="results-bar">
+    <span class="results-left"><span id="count" role="status"></span>
+      <span class="tri" role="group" aria-label="Trier">
+        <button type="button" data-tri="" aria-pressed="true">Plus récentes</button>
+        <button type="button" data-tri="vues" aria-pressed="false">Plus vues</button>
+      </span></span>
+    <span class="legend">Compétences : <span class="sk sk--t">technique</span> <span class="sk sk--h">humaine</span></span>
+  </div>
+
+  <div id="auteurs-haut"></div>
+  <div class="grid" id="grid"></div>
+  <div id="auteurs-bas"></div>
+</main>
+
+<footer class="footer" style="margin-top: 96px">
+  <div class="wrap">
+    <span>© 2026 Océane Bourdenet</span>
+    <ul>
+      <li><a href="https://fr.linkedin.com/in/oc%C3%A9ane-bourdenet-6babb7200" target="_blank" rel="noopener noreferrer">LinkedIn</a></li>
+      <li><a href="#" data-demo="Maquette : page des mentions légales à créer.">Mentions légales</a></li>
+    </ul>
+  </div>
+</footer>
+<script src="data.js"></script>
+<script src="app.js"></script>
+</body>
+</html>
