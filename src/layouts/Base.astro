@@ -56,6 +56,7 @@ const jsonLd = {
         <a class="nav-name" href="/">{cv.profil.nom}</a>
         <nav aria-label="Navigation principale">
           <ul>
+            <li><a href="/" aria-current={page === 'accueil' ? 'page' : undefined}>Accueil</a></li>
             <li><a href="/publications/" aria-current={page === 'publications' ? 'page' : undefined}>Publications</a></li>
             <li><a href="/cv/" aria-current={page === 'cv' ? 'page' : undefined}>CV</a></li>
             <li><a href="/#contact">Contact</a></li>

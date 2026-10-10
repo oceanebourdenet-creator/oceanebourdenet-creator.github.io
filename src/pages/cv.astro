@@ -6,6 +6,7 @@ import { getEntry } from 'astro:content';
 import { periode, slug } from '../lib/format';
 import { libelleCompetence } from '../config/competences';
 import { publications, toutesCompetences } from '../lib/publications';
+import photo from '../assets/photo.jpg';
 
 const cv = (await getEntry('cv', 'cv'))!.data;
 const pubs = await publications();
@@ -29,6 +30,9 @@ const NIVEAUX = ['A1', 'A2', 'B1', 'B2', 'C1', 'C2'];
           <a href="/#contact">Me contacter</a>
           {cv.profil.reseaux.map((r) => <a href={r.url} target="_blank" rel="noopener noreferrer">{r.nom} ↗</a>)}
         </p>
+      </div>
+      <div class="photo cv-photo">
+        <Image src={photo} alt={`Portrait de ${cv.profil.nom} en reportage`} widths={[240, 480]} sizes="(max-width: 680px) 104px, 240px" format="webp" loading="eager" />
       </div>
     </header>
 
