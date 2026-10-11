@@ -41,7 +41,7 @@ experiences:
   - media: AFP
     logo: /logos/afp.svg
     poste: Journaliste d'agence
-    type: Stage d'un mois
+    type: Stage
     lieu: Le Caire, Égypte
     debut: 2024-01
     fin: 2024-01
@@ -162,9 +162,9 @@ langues:
   - langue: Anglais
     niveau: C1
   - langue: Arabe classique
-    niveau: B1
-  - langue: Arabe libanais
     niveau: A2
+  - langue: Arabe libanais
+    niveau: A1
 engagement:
   - structure: Pangéa Lille
     logo: /logos/pangea.jpg
