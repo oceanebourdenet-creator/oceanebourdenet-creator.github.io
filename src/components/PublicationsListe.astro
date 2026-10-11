@@ -1,6 +1,7 @@
 ---
 // Liste des publications avec onglets de catégorie (liens vers /publications/[categorie]/),
 // filtres secondaires, tri et repères par année. Sans JavaScript, toutes les cartes restent affichées.
+import { image } from '../lib/images';
 import Card from './Card.astro';
 import SerieCard from './SerieCard.astro';
 import Lecteur from './Lecteur.astro';
@@ -116,7 +117,7 @@ let annee = '';
         <ul>
           {auteurs.map((x) => (
             <li><a href={x.pageAuteur} target="_blank" rel="noopener noreferrer">
-              {x.logo ? <Image src={x.logo} alt={x.media} height={28} /> : <b>{x.media}</b>}
+              {image(x.logo) ? <Image src={image(x.logo)!} alt={x.media} height={28} /> : <b>{x.media}</b>}
               <span>Voir mes articles <span aria-hidden="true">↗</span><span class="sr"> sur {x.media} (nouvel onglet)</span></span>
             </a></li>
           ))}

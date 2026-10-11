@@ -6,11 +6,11 @@ categorie: "enquetes-osint"
 format: "article"
 phare: 5
 accroche: "Des photos prises par satellite montrent l'apparition de nappes sombres à la surface de la mer dans le détroit d'Ormuz, depuis le début de la guerre déclenchée par les États-Unis et Israël contre l'Iran."
-coulisses:
-  - "J'ai récupéré les images satellites sur Copernicus."
-  - "J'ai construit un comparatif avant / après sur Flourish."
-  - "J'ai interviewé la géographe Isabella Damiani pour décrypter les images."
-image: "../../assets/publications/tv5-2818677.jpg"
+coulisses: |-
+  - J'ai récupéré les images satellites sur Copernicus.
+  - J'ai construit un comparatif avant / après sur Flourish.
+  - J'ai interviewé la géographe Isabella Damiani pour décrypter les images.
+image: "/publications/tv5-2818677.jpg"
 competences:
   techniques:
     - "satellite"

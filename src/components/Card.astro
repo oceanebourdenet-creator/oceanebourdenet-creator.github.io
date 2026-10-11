@@ -1,5 +1,6 @@
 ---
 // Carte de prévisualisation d'une publication (brief 5.3).
+import { image } from '../lib/images';
 import { Image } from 'astro:assets';
 import { categorieParSlug } from '../config/categories';
 import { site } from '../config/site';
@@ -16,6 +17,7 @@ const lien = lienDe(p);
 const sortie = lien.archive ? 'Version archivée' : plat ? `Voir sur ${plat}` : `Lire sur ${d.media}`;
 const large = d.plateforme === 'youtube' && !d.vertical;
 const teinte = [...d.url].reduce((h, c) => h + c.charCodeAt(0), 0) % 4;
+const img = image(d.image);
 const competencesAffichees = [...d.competences.techniques, ...d.competences.humaines];
 ---
 <article
@@ -30,14 +32,14 @@ const competencesAffichees = [...d.competences.techniques, ...d.competences.huma
   data-id={p.id}
 >
   <div class:list={['card-media', { 'card-media--wide': large }]}>
-    {d.image ? (
+    {img ? (
       large ? (
         <>
-          <Image class="bg" src={d.image} alt="" width={480} format="webp" aria-hidden="true" />
-          <Image class="fg" src={d.image} alt="" widths={[400, 720]} sizes="(max-width: 680px) 82vw, 380px" format="webp" />
+          <Image class="bg" src={img} alt="" width={480} format="webp" aria-hidden="true" />
+          <Image class="fg" src={img} alt="" widths={[400, 720]} sizes="(max-width: 680px) 82vw, 380px" format="webp" />
         </>
       ) : (
-        <Image src={d.image} alt="" widths={[400, 720]} sizes="(max-width: 680px) 82vw, 380px" format="webp" />
+        <Image src={img} alt="" widths={[400, 720]} sizes="(max-width: 680px) 82vw, 380px" format="webp" />
       )
     ) : (
       <div class="card-fallback" data-teinte={teinte} aria-hidden="true">

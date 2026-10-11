@@ -1,5 +1,6 @@
 ---
 // Carte « série » : plusieurs vidéos d'un même événement en une seule carte.
+import { image } from '../lib/images';
 import { Image } from 'astro:assets';
 import { categorieParSlug } from '../config/categories';
 import { jourCourt, dateLongue, isoDate, slug } from '../lib/format';
@@ -28,10 +29,10 @@ const seq = `serie:${serie.id}`;
   data-audience={episodes.reduce((t, p) => t + audience(p), 0)}
 >
   <div class="card-media">
-    {first.data.image && <Image src={first.data.image} alt="" widths={[400, 720]} sizes="(max-width: 680px) 82vw, 380px" format="webp" />}
+    {image(first.data.image) && <Image src={image(first.data.image)!} alt="" widths={[400, 720]} sizes="(max-width: 680px) 82vw, 380px" format="webp" />}
     <span class="badge">Série · {episodes.length} vidéos</span>
     <span class="serie-stack" aria-hidden="true">
-      {episodes.slice(1, 4).map((p) => p.data.image && <Image src={p.data.image} alt="" width={96} format="webp" />)}
+      {episodes.slice(1, 4).map((p) => image(p.data.image) && <Image src={image(p.data.image)!} alt="" width={96} format="webp" />)}
     </span>
     <button class="play" type="button" data-play={first.id} data-seq={seq}><Fragment set:html={ICON_PLAY} /><span>Voir les {episodes.length} vidéos</span></button>
   </div>

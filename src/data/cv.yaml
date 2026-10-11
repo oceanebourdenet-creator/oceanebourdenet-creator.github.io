@@ -20,7 +20,7 @@ experiences:
     description: "Sujets vidéo et web proposés et réalisés pour TV5MONDE."
   -
     media: "TV5MONDE"
-    logo: "../assets/logos/tv5monde.svg"
+    logo: "/logos/tv5monde.svg"
     pageAuteur: "https://information.tv5monde.com/auteur/oceane-bourdenet/556"
     poste: "Journaliste vidéo / web"
     type: "Alternance"
@@ -30,7 +30,7 @@ experiences:
     description: "Vidéos courtes pour les réseaux sociaux et articles web pour la rédaction numérique."
   -
     media: "France-Antilles"
-    logo: "../assets/logos/franceantilles.png"
+    logo: "/logos/franceantilles.png"
     poste: "Journaliste vidéo"
     type: "CDD"
     lieu: "Martinique"
@@ -39,7 +39,7 @@ experiences:
     description: "Reportages vidéo pour le site et les réseaux sociaux du quotidien."
   -
     media: "AFP"
-    logo: "../assets/logos/afp.svg"
+    logo: "/logos/afp.svg"
     poste: "Journaliste d'agence"
     type: "Stage d'un mois"
     lieu: "Le Caire, Égypte"
@@ -48,7 +48,7 @@ experiences:
     description: "Rédaction de dépêches au bureau du Caire."
   -
     media: "L'Orient-Le Jour"
-    logo: "../assets/logos/lorientlejour.svg"
+    logo: "/logos/lorientlejour.svg"
     pageAuteur: "https://www.lorientlejour.com/author/9702-oceane-bourdenet"
     poste: "Service vidéo et service économie"
     type: "Stage"
@@ -60,8 +60,8 @@ formations:
   -
     etablissement: "ESJ Lille et Sciences Po Lille"
     logos:
-      - "../assets/logos/esj.svg"
-      - "../assets/logos/sciencespo.svg"
+      - "/logos/esj.svg"
+      - "/logos/sciencespo.svg"
     diplome: "Master de journalisme, spécialité internationale"
     debut: "2024-09"
     fin: "2026-06"
@@ -69,14 +69,14 @@ formations:
   -
     etablissement: "École Supérieure de Journalisme de Lille (ESJ Lille) - Université de Lille"
     logos:
-      - "../assets/logos/esj.svg"
+      - "/logos/esj.svg"
     diplome: "DEUG Économie-Gestion, option journalisme"
     debut: "2023-09"
     fin: "2024-06"
   -
     etablissement: "École Supérieure de Journalisme de Lille (ESJ Lille) - Université de Lille"
     logos:
-      - "../assets/logos/esj.svg"
+      - "/logos/esj.svg"
     diplome: "Licence de science politique, option journalisme, mention Bien"
     debut: "2020-09"
     fin: "2023-06"
@@ -84,7 +84,7 @@ formations:
       titre: "Échange universitaire"
       etablissement: "Université Saint-Joseph de Beyrouth (Liban)"
       logos:
-        - "../assets/logos/usj.jpg"
+        - "/logos/usj.jpg"
       debut: "2022-09"
       fin: "2023-06"
 competences:
@@ -199,7 +199,7 @@ langues:
 engagement:
   -
     structure: "Pangéa Lille"
-    logo: "../assets/logos/pangea.jpg"
+    logo: "/logos/pangea.jpg"
     lien:
       libelle: "Voir Pangéa sur Instagram"
       url: "https://www.instagram.com/pangeaassociation/"

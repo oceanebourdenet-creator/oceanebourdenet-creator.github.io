@@ -1,5 +1,6 @@
 ---
 // Accueil en une seule page : tout le profil en un défilement (brief 4.2).
+import { image } from '../lib/images';
 import Base from '../layouts/Base.astro';
 import Card from '../components/Card.astro';
 import SerieCard from '../components/SerieCard.astro';
@@ -61,7 +62,7 @@ const redactions = cv.experiences.filter((x) => x.logo);
     <div class="wrap">
       <p>J'ai travaillé pour</p>
       <ul class="logos">
-        {redactions.map((x) => <li><Image src={x.logo!} alt={x.media} height={30} class="logo-media" /></li>)}
+        {redactions.map((x) => <li><Image src={image(x.logo)!} alt={x.media} height={30} class="logo-media" /></li>)}
       </ul>
     </div>
   </section>
@@ -127,7 +128,7 @@ const redactions = cv.experiences.filter((x) => x.logo);
             <li>
               <span class="xp-date">{periode(x.debut, x.fin, true)}</span>
               <div>
-                {x.logo ? <Image class="xp-logo" src={x.logo} alt={x.media} height={26} /> : <p class="xp-media">{x.media}</p>}
+                {image(x.logo) ? <Image class="xp-logo" src={image(x.logo)!} alt={x.media} height={26} /> : <p class="xp-media">{x.media}</p>}
                 <p class="xp-role">{x.poste} · {x.type} · {x.lieu}</p>
               </div>
             </li>

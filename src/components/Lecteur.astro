@@ -1,6 +1,7 @@
 ---
 // Lecteur en fenêtre : vidéo intégrée chargée au clic (brief 5.6), coulisses, navigation.
 // Les données des publications sont fournies en JSON ; le script construit la fenêtre à la demande.
+import { image } from '../lib/images';
 import { getImage } from 'astro:assets';
 import { categorieParSlug } from '../config/categories';
 import { site } from '../config/site';
@@ -15,7 +16,8 @@ const donnees: Record<string, unknown> = {};
 for (const p of pubs) {
   const d = p.data;
   const plat = d.plateforme ? PLATEFORMES[d.plateforme] : '';
-  const img = d.image ? (await getImage({ src: d.image, width: 720, format: 'webp' })).src : '';
+  const meta = image(d.image);
+  const img = meta ? (await getImage({ src: meta, width: 720, format: 'webp' })).src : '';
   const serie = d.serie ? series.get(d.serie.id) : undefined;
   const lien = lienDe(p);
   donnees[p.id] = {

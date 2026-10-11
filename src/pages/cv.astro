@@ -1,5 +1,6 @@
 ---
 // CV complet, généré entièrement à partir de src/data/cv.yaml (brief 6).
+import { image } from '../lib/images';
 import Base from '../layouts/Base.astro';
 import { Image } from 'astro:assets';
 import { getEntry } from 'astro:content';
@@ -45,7 +46,7 @@ const NIVEAUX = ['A1', 'A2', 'B1', 'B2', 'C1', 'C2'];
             <li class="entry">
               <span class="entry-date">{periode(x.debut, x.fin)}</span>
               <div>
-                {x.logo && <div class="entry-logos"><Image src={x.logo} alt="" height={34} /></div>}
+                {image(x.logo) && <div class="entry-logos"><Image src={image(x.logo)!} alt="" height={34} /></div>}
                 <h3 class:list={{ sr: !!x.logo }}>{x.media}</h3>
                 <p class="role">{x.poste} <span>· {x.type} · {x.lieu}</span></p>
                 {x.description && <p class="desc">{x.description}</p>}
@@ -117,7 +118,7 @@ const NIVEAUX = ['A1', 'A2', 'B1', 'B2', 'C1', 'C2'];
           <li class="entry">
             <span class="entry-date">{periode(x.debut, x.fin)}</span>
             <div>
-              {x.logos && <div class="entry-logos">{x.logos.map((l) => <Image src={l} alt="" height={34} />)}</div>}
+              {x.logos && <div class="entry-logos">{x.logos.map((l) => image(l) && <Image src={image(l)!} alt="" height={34} />)}</div>}
               <h3>{x.diplome}</h3>
               <p class="role"><span>{x.etablissement}</span></p>
               {x.description && <p class="desc">{x.description}</p>}
@@ -125,7 +126,7 @@ const NIVEAUX = ['A1', 'A2', 'B1', 'B2', 'C1', 'C2'];
                 <div class="sub-entry">
                   <span class="entry-date">{periode(x.echange.debut, x.echange.fin)}</span>
                   <div>
-                    {x.echange.logos && <div class="entry-logos">{x.echange.logos.map((l) => <Image src={l} alt="" height={30} />)}</div>}
+                    {x.echange.logos && <div class="entry-logos">{x.echange.logos.map((l) => image(l) && <Image src={image(l)!} alt="" height={30} />)}</div>}
                     <h4>{x.echange.titre}</h4>
                     <p class="role"><span>{x.echange.etablissement}</span></p>
                   </div>
@@ -166,7 +167,7 @@ const NIVEAUX = ['A1', 'A2', 'B1', 'B2', 'C1', 'C2'];
           <li class="entry">
             <span class="entry-date">{periode(x.debut, x.fin)}</span>
             <div>
-              <div class="entry-logos">{x.logo ? <Image class="carre" src={x.logo} alt="" height={56} /> : <span class="mono" aria-hidden="true">{x.structure[0]}</span>}</div>
+              <div class="entry-logos">{image(x.logo) ? <Image class="carre" src={image(x.logo)!} alt="" height={56} /> : <span class="mono" aria-hidden="true">{x.structure[0]}</span>}</div>
               <h3>{x.structure}</h3>
               <p class="role">{x.role}</p>
               {x.description && <p class="desc">{x.description}</p>}

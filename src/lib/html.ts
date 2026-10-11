@@ -34,8 +34,12 @@ export function competencesHTML(cles: string[]): string {
 }
 
 /** Bloc « Les coulisses » : un paragraphe ou une liste. */
-export function coulissesHTML(c?: string | string[]): string {
-  if (!c) return '';
-  const corps = Array.isArray(c) ? `<ul>${c.map((l) => `<li>${esc(l)}</li>`).join('')}</ul>` : `<p>${esc(c)}</p>`;
+export function coulissesHTML(c?: string): string {
+  if (!c?.trim()) return '';
+  const lignes = c.split('\n').map((l) => l.trim()).filter(Boolean);
+  // Si toutes les lignes commencent par « - », on affiche une liste ; sinon des paragraphes
+  const corps = lignes.every((l) => l.startsWith('- '))
+    ? `<ul>${lignes.map((l) => `<li>${esc(l.slice(2))}</li>`).join('')}</ul>`
+    : lignes.map((l) => `<p>${esc(l)}</p>`).join('');
   return `<div class="coulisses"><p class="coulisses-titre">Les coulisses</p>${corps}</div>`;
 }

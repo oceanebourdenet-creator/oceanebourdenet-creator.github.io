@@ -6,7 +6,7 @@ categorie: "enquetes-osint"
 format: "article"
 accroche: "Les enjeux de l'accord entre le gouvernement d'Al-Charaa et les Forces démocratiques syriennes (FDS), à majorité kurde, expliqués avec une carte."
 coulisses: "Pour comprendre les enjeux de l'accord entre le gouvernement d'Al-Charaa et les Forces démocratiques syriennes, à majorité kurde, j'ai réalisé une carte interactive à partir de données en sources ouvertes."
-image: "../../assets/publications/tv5-2808039.jpg"
+image: "/publications/tv5-2808039.jpg"
 competences:
   techniques:
     - "carto"

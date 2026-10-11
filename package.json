@@ -10,7 +10,9 @@
     "build": "astro build",
     "preview": "astro preview",
     "astro": "astro",
-    "taille": "node scripts/taille.mjs"
+    "taille": "node scripts/taille.mjs",
+    "cms": "node scripts/pages-cms.mjs",
+    "prebuild": "node scripts/pages-cms.mjs --verifier"
   },
   "dependencies": {
     "@astrojs/sitemap": "^3.7.4",

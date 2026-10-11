@@ -6,8 +6,13 @@ import { glob } from 'astro/loaders';
 import { z } from 'astro/zod';
 import { slugsCategories } from './config/categories';
 import { clesTechniques, clesHumaines } from './config/competences';
+import { existsSync } from 'node:fs';
+import { join } from 'node:path';
 
 const liste = (vals: readonly string[]) => vals.join(', ');
+// Un champ laissé vide dans le CMS peut être enregistré "" ou null : on le traite comme absent.
+const vide = (v: unknown) => (v === '' || v === null ? undefined : v);
+const facultatif = <T extends z.ZodType>(s: T) => z.preprocess(vide, s.optional());
 const obligatoire = (champ: string) => ({ error: `Le champ « ${champ} » est obligatoire.` });
 
 const categorie = z.enum(slugsCategories, {
@@ -19,45 +24,51 @@ const competences = z
     humaines: z.array(z.enum(clesHumaines, { error: `Compétence humaine inconnue. Clés possibles : ${liste(clesHumaines)} (src/config/competences.ts).` })).default([]),
   })
   .default({ techniques: [], humaines: [] });
-// Coulisses : un paragraphe, ou une liste de phrases
-const coulisses = z.union([z.string(), z.array(z.string())]).optional();
-const chiffre = z.number({ error: 'Un chiffre doit être un nombre entier, sans espace ni « k ».' }).int().nonnegative().optional();
+// Coulisses : un paragraphe, ou une liste (chaque ligne commençant par « - »)
+const coulisses = facultatif(z.string());
+
+// Image : chemin « /publications/fichier.jpg » ou « /logos/fichier.svg », fichier présent dans src/assets
+const cheminImage = (dossier: 'publications' | 'logos') =>
+  z
+    .string()
+    .regex(new RegExp(`^/${dossier}/[^/]+\\.(jpe?g|png|webp|avif|svg)$`, 'i'), `L’image doit être un chemin du type « /${dossier}/nom-du-fichier.jpg ».`)
+    .refine((p) => existsSync(join(process.cwd(), 'src/assets', p)), { error: (iss) => `Image introuvable : src/assets${iss.input} n’existe pas.` });
+const chiffre = facultatif(z.number({ error: 'Un chiffre doit être un nombre entier, sans espace ni « k ».' }).int().nonnegative());
 
 const publications = defineCollection({
   // Les fichiers commençant par « _ » (comme _modele.yaml) sont ignorés.
   loader: glob({ base: './src/content/publications', pattern: '**/[^_]*.{yaml,yml,md}' }),
-  schema: ({ image }) =>
-    z
+  schema: z
       .object({
         titre: z.string(obligatoire('titre')),
         media: z.string(obligatoire('media')),
         date: z.coerce.date({ error: 'Date invalide : utiliser le format AAAA-MM-JJ.' }),
         url: z.url({ error: 'Le champ « url » doit être une adresse complète (https://…).' }),
-        archive: z.url({ error: 'Le champ « archive » doit être une adresse complète.' }).optional(),
+        archive: facultatif(z.url({ error: 'Le champ « archive » doit être une adresse complète.' })),
         categorie,
         format: z.enum(['article', 'reportage', 'enquete', 'podcast', 'video', 'interview', 'autre'], {
           error: 'Format inconnu. Choisir parmi : article, reportage, enquete, podcast, video, interview, autre.',
         }),
-        thematiques: z.array(z.string()).optional(),
+        thematiques: facultatif(z.array(z.string())),
         accroche: z.string(obligatoire('accroche')).min(1, 'L’accroche ne peut pas être vide.'),
         coulisses,
-        role: z.string().optional(),
-        image: image().optional(),
-        phare: z.number().int().positive().optional(),
+        role: facultatif(z.string()),
+        image: facultatif(cheminImage('publications')),
+        phare: facultatif(z.number().int().positive()),
         lienMort: z.boolean().default(false),
-        derniereVerification: z.coerce.date().optional(),
-        plateforme: z.enum(['instagram', 'tiktok', 'youtube', 'facebook', 'x', 'autre']).optional(),
-        embed: z.string().optional(),
+        derniereVerification: facultatif(z.coerce.date()),
+        plateforme: facultatif(z.enum(['instagram', 'tiktok', 'youtube', 'facebook', 'x', 'autre'])),
+        embed: facultatif(z.string()),
         vertical: z.boolean().default(false),
-        duree: z.string().optional(),
-        serie: reference('series').optional(),
+        duree: facultatif(z.string()),
+        serie: facultatif(reference('series')),
         collaboration: z.boolean().default(false),
         vues: chiffre,
         likes: chiffre,
         commentaires: chiffre,
         partages: chiffre,
-        dateChiffres: z.coerce.date().optional(),
-        sourceChiffres: z.enum(['public', 'media']).optional(),
+        dateChiffres: facultatif(z.coerce.date()),
+        sourceChiffres: facultatif(z.enum(['public', 'media'])),
         afficherChiffres: z.boolean().default(false),
         competences,
       })
@@ -79,7 +90,7 @@ const series = defineCollection({
     categorie,
     accroche: z.string(obligatoire('accroche')),
     coulisses,
-    phare: z.number().int().positive().optional(),
+    phare: facultatif(z.number().int().positive()),
   }),
 });
 
@@ -87,8 +98,7 @@ const periode = { debut: z.string().regex(/^\d{4}-\d{2}$/, 'Date de début au fo
 
 const cv = defineCollection({
   loader: glob({ base: './src/data', pattern: 'cv.yaml' }),
-  schema: ({ image }) =>
-    z.object({
+  schema: z.object({
       profil: z.object({
         nom: z.string(),
         titre: z.string(),
@@ -100,7 +110,7 @@ const cv = defineCollection({
       experiences: z.array(
         z.object({
           media: z.string(),
-          logo: image().optional(),
+          logo: cheminImage('logos').optional(),
           pageAuteur: z.url().optional(),
           poste: z.string(),
           type: z.string(),
@@ -112,11 +122,11 @@ const cv = defineCollection({
       formations: z.array(
         z.object({
           etablissement: z.string(),
-          logos: z.array(image()).optional(),
+          logos: z.array(cheminImage('logos')).optional(),
           diplome: z.string(),
           ...periode,
           description: z.string().optional(),
-          echange: z.object({ titre: z.string(), etablissement: z.string(), logos: z.array(image()).optional(), ...periode }).optional(),
+          echange: z.object({ titre: z.string(), etablissement: z.string(), logos: z.array(cheminImage('logos')).optional(), ...periode }).optional(),
         }),
       ),
       competences: z.object({
@@ -127,7 +137,7 @@ const cv = defineCollection({
       engagement: z.array(
         z.object({
           structure: z.string(),
-          logo: image().optional(),
+          logo: cheminImage('logos').optional(),
           role: z.string(),
           ...periode,
           description: z.string().optional(),
