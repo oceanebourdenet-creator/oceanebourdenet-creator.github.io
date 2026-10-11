@@ -1,6 +1,60 @@
 accueil:
   boutonPublications: Voir les publications
   medias: J'ai travaillé pour
+  methode:
+    titre: De l'idée à la publication
+    sousTitre: en passant par le tournage et le montage
+    intro: Sur chaque sujet, je fais tout, seule ou avec la rédaction.
+    etapes:
+      - titre: Le sujet et l'angle
+        texte: Je repère les actualités qui circulent sur les réseaux sociaux. Je
+          contacte ensuite les primo-diffuseurs afin d’obtenir davantage
+          d’informations et d’en vérifier l’authenticité. Je recoupe les
+          informations recueillies, puis je définis un angle.
+        outils: X, TikTok, agences de presse, médias internationaux
+      - titre: Les recherches
+        texte: Mon travail s’appuie sur des données en sources ouvertes (OSINT). Pour en
+          vérifier l’authenticité, j’utilise des outils qui analysent des
+          textes, des fichiers audio et des images. Ces outils m’aident à
+          retrouver l’origine des contenus grâce à la recherche inversée et à
+          détecter ceux qui ont été générés par l’IA. Je fais également appel à
+          des experts lorsque le sujet le nécessite.
+        outils: Telegram, X, InVID, SynthID
+      - titre: Le script
+        texte: Une fois mon sujet identifié et mes informations vérifiées, je passe à
+          l’écriture du script. Je repère les images fortes, car ce sont elles
+          qui vont structurer mon sujet et guider sa construction.
+        outils: X, TikTok, Associated Press, AFP
+      - titre: Les sources
+        texte: Lorsque le sujet le nécessite, je recherche des sources capables de lui
+          apporter une dimension humaine. Par exemple, dans le cadre d’un
+          reportage sur l’augmentation des violences envers les enfants en
+          Haïti, j’ai interviewé la sœur d’un membre de gang mineur.
+        outils: TikTok, X, Linkedin
+      - titre: Le tournage
+        texte: Je réalise mes tournages à la caméra ou au smartphone, selon les
+          contraintes du terrain, en assurant également la prise de son.
+        outils: Sony α7 · Panasonic GH5 · kit Mojo · drone
+      - titre: Le montage
+        texte: Je m’occupe du montage, de la collecte des images, du rythme, des
+          sous-titres et de l’habillage.
+        outils: Adobe Premiere Pro
+      - titre: Le motion design
+        texte: Cartes, chiffres et titres animés.
+        outils: After Effects
+      - titre: La publication
+        texte: Une version par plateforme, avec un titre, une légende et des mots-clés
+          pensés pour le référencement.
+        outils: SEO · Instagram · TikTok · YouTube · WordPress
+  competencesCles:
+    - OSINT et vérification
+    - Tournage α7 · GH5
+    - Montage Premiere Pro
+    - Motion design After Effects
+    - Référencement SEO
+    - Journalisme mobile
+    - Drone A1/A3
+    - Data viz Flourish
   phares:
     titre: Publications phares
     intro: "Une sélection de vidéos et d'articles. Je réalise mes vidéos de A à Z :
@@ -30,45 +84,6 @@ accueil:
     erreur: L’envoi n’a pas fonctionné. Vérifiez votre adresse e-mail et réessayez
       dans un instant.
     sujet: Nouveau message depuis le portfolio
-  competencesCles:
-    - OSINT et vérification
-    - Tournage α7 · GH5
-    - Montage Premiere Pro
-    - Motion design After Effects
-    - Référencement SEO
-    - Journalisme mobile
-    - Drone A1/A3
-    - Data viz Flourish
-  methode:
-    titre: De l'idée à la publication
-    sousTitre: en passant par le tournage et le montage
-    intro: Sur chaque sujet, je fais tout, seule ou avec la rédaction.
-    etapes:
-      - titre: Le sujet et l'angle
-        texte: Je repère ce qui circule en ligne et sur le terrain, et je cherche ce qui
-          n'a pas encore été raconté.
-      - titre: Les recherches
-        texte: "Sources ouvertes, images satellites, données : je vérifie avant
-          d'écrire."
-        outils: OSINT
-      - titre: Le script
-        texte: J'écris un récit court, pensé pour le format vertical et un visionnage
-          sans le son.
-      - titre: Les sources
-        texte: Je contacte les personnes à interroger et je prépare les entretiens.
-      - titre: Le tournage
-        texte: Caméra ou smartphone selon le terrain, prise de son comprise.
-        outils: Sony α7 · Panasonic GH5 · kit Mojo · drone
-      - titre: Le montage
-        texte: Rythme, sous-titres, habillage.
-        outils: Premiere Pro
-      - titre: Le motion design
-        texte: Cartes, chiffres et titres animés.
-        outils: After Effects
-      - titre: La publication
-        texte: Une version par plateforme, avec un titre, une légende et des mots-clés
-          pensés pour le référencement.
-        outils: SEO · Instagram · TikTok · YouTube · WordPress
 publications:
   titre: Publications
   intro: "Vidéos pour les réseaux sociaux et articles. Sauf mention contraire, je
