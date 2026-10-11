@@ -2,9 +2,10 @@ accueil:
   boutonPublications: Voir les publications
   medias: J'ai travaillé pour
   methode:
-    titre: De l'idée à la publication
-    sousTitre: en passant par le tournage et le montage
-    intro: Sur chaque sujet, je fais tout, seule ou avec la rédaction.
+    titre: De l’idée initiale au montage final
+    sousTitre: En passant par la vérification des sources et la rédaction du script.
+    intro: Lorsque je publie un article ou une vidéo, je m’assure toujours de
+      l’authenticité des informations que je diffuse.
     etapes:
       - titre: Le sujet et l'angle
         texte: Je repère les actualités sur les réseaux sociaux. Je contacte les
