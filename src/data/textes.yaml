@@ -13,11 +13,10 @@ accueil:
         outils: X, TikTok, agences de presse, médias internationaux
       - titre: Les recherches
         texte: J'utilise des données en sources ouvertes (OSINT) et des outils qui
-          analysent des textes, des fichiers audio et des images pour en
-          l’origine des contenus grâce à la recherche inversée et à détecter
-          ceux qui ont été générés par l’IA. Je fais également appel à des
-          experts lorsque le sujet le nécessite.
-        outils: Telegram, X, InVID, SynthID
+          analysent des textes, des fichiers audio et des images pour en tracer
+          l’origine. Je fais également appel à des experts lorsque le sujet le
+          nécessite.
+        outils: Telegram, X, Discord, outils IA (InVID, SynthID, etc.)
       - titre: Le script
         texte: Une fois mon sujet identifié et mes informations vérifiées, je passe à
           l’écriture du script. Je repère les images fortes, car ce sont elles
