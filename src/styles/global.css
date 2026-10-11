@@ -109,7 +109,7 @@ p { margin: 0; }
 .medias li { font: 500 clamp(19px, 2.2vw, 24px)/1.2 var(--serif); }
 .medias .logos { align-items: center; gap: 18px 48px; }
 .medias .logos img { width: auto; max-width: 180px; height: 28px; }
-.medias .logos img[alt="France-Antilles"] { height: 22px; }
+.medias .logos img[alt^="France-Antilles"] { height: 22px; }
 .medias .logos img[alt="L'Orient-Le Jour"] { height: 25px; }
 .entry-liens { display: flex; flex-wrap: wrap; gap: 8px 20px; margin-top: 10px; }
 .entry-liens .more { margin-top: 0; }

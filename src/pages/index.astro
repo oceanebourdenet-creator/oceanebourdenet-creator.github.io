@@ -97,13 +97,13 @@ const redactions = cv.experiences.filter((x) => x.logo);
     <div class="wrap">
       <div class="section-head">
         <div>
-          <h2 id="t-methode">{cv.methode.titre}</h2>
-          {cv.methode.sousTitre && <p class="sub">{cv.methode.sousTitre}</p>}
-          {cv.methode.intro && <p>{cv.methode.intro}</p>}
+          <h2 id="t-methode">{T.methode.titre}</h2>
+          {T.methode.sousTitre && <p class="sub">{T.methode.sousTitre}</p>}
+          {T.methode.intro && <p>{T.methode.intro}</p>}
         </div>
       </div>
       <ol class="steps">
-        {cv.methode.etapes.map((e) => <li><h3>{e.titre}</h3><p>{e.texte}</p>{e.outils && <small>{e.outils}</small>}</li>)}
+        {T.methode.etapes.map((e) => <li><h3>{e.titre}</h3><p>{e.texte}</p>{e.outils && <small>{e.outils}</small>}</li>)}
       </ol>
     </div>
   </section>
@@ -138,7 +138,7 @@ const redactions = cv.experiences.filter((x) => x.logo);
         </ul>
         <div class="keyskills">
           <h3>{T.parcours.competencesCles}</h3>
-          <ul>{cv.competencesCles.map((c) => <li>{c}</li>)}</ul>
+          <ul>{T.competencesCles.map((c) => <li>{c}</li>)}</ul>
           <h3>{T.parcours.langues}</h3>
           <ul>{cv.langues.map((l) => <li>{l.langue} {l.niveau}</li>)}</ul>
           <div class="brief-actions">
@@ -155,14 +155,17 @@ const redactions = cv.experiences.filter((x) => x.logo);
         <h2 id="t-contact">{T.contact.titre}</h2>
         <p>{T.contact.intro}</p>
       </div>
-      <form class="form" method="POST" action={site.formspree ? `https://formspree.io/f/${site.formspree}` : undefined}>
+      <form class="form" method="POST" action={site.formspree ? `https://formspree.io/f/${site.formspree}` : undefined} data-contact data-envoye={T.contact.envoye} data-erreur={T.contact.erreur}>
+        <input type="hidden" name="_subject" value={T.contact.sujet} />
+        <!-- Piège à robots : champ invisible, laissé vide par les humains -->
+        <input type="text" name="_gotcha" tabindex="-1" autocomplete="off" aria-hidden="true" style="position:absolute;left:-9999px" />
         <div class="row">
           <label for="c-nom">Nom<input id="c-nom" name="nom" autocomplete="name" required /></label>
           <label for="c-mail">E-mail<input id="c-mail" name="email" type="email" autocomplete="email" required /></label>
         </div>
         <label for="c-msg">Message<textarea id="c-msg" name="message" required></textarea></label>
         <button class="btn" type="submit" disabled={!site.formspree}>{T.contact.bouton}</button>
-        <p class="form-note">{site.formspree ? T.contact.note : T.contact.noteInactif}</p>
+        <p class="form-note" role="status" aria-live="polite">{site.formspree ? T.contact.note : T.contact.noteInactif}</p>
       </form>
     </div>
   </section>
@@ -171,6 +174,27 @@ const redactions = cv.experiences.filter((x) => x.logo);
 </Base>
 
 <script>
+  // Formulaire de contact : envoi à Formspree sans quitter la page (sans JavaScript, envoi classique)
+  const form = document.querySelector<HTMLFormElement>('form[data-contact]');
+  if (form?.action) {
+    const note = form.querySelector<HTMLElement>('.form-note')!;
+    const bouton = form.querySelector<HTMLButtonElement>('button[type="submit"]')!;
+    form.addEventListener('submit', async (e) => {
+      e.preventDefault();
+      bouton.disabled = true;
+      try {
+        const r = await fetch(form.action, { method: 'POST', body: new FormData(form), headers: { Accept: 'application/json' } });
+        if (!r.ok) throw new Error(String(r.status));
+        form.reset();
+        note.textContent = form.dataset.envoye ?? '';
+      } catch {
+        note.textContent = form.dataset.erreur ?? '';
+      } finally {
+        bouton.disabled = false;
+      }
+    });
+  }
+
   // Flèches du carrousel : défilement d'une carte, désactivées aux extrémités
   const rail = document.getElementById('phares');
   const fleches = document.querySelectorAll<HTMLButtonElement>('[data-rail]');

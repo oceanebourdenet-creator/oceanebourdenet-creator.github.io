@@ -146,13 +146,6 @@ const cv = defineCollection({
         }),
       ),
       distinctions: z.array(z.object({ titre: z.string(), annee: z.string(), description: z.string().optional() })).default([]),
-      competencesCles: z.array(z.string()).default([]),
-      methode: z.object({
-        titre: z.string(),
-        sousTitre: z.string().optional(),
-        intro: z.string().optional(),
-        etapes: z.array(z.object({ titre: z.string(), texte: z.string(), outils: z.string().optional() })),
-      }),
     }),
 });
 
@@ -162,10 +155,17 @@ const textes = defineCollection({
   schema: z.object({
     accueil: z.object({
       boutonPublications: t, medias: t,
+      competencesCles: z.array(z.string()).default([]),
+      methode: z.object({
+        titre: t,
+        sousTitre: z.string().optional(),
+        intro: z.string().optional(),
+        etapes: z.array(z.object({ titre: t, texte: t, outils: z.string().optional() })),
+      }),
       phares: z.object({ titre: t, intro: t, lienTout: t }),
       chiffres: z.object({ titre: t, vues: t, likes: t, annees: t, redactions: t, note: t }),
       parcours: z.object({ titre: t, competencesCles: t, langues: t, boutonCV: t }),
-      contact: z.object({ titre: t, intro: t, bouton: t, note: t, noteInactif: t }),
+      contact: z.object({ titre: t, intro: t, bouton: t, note: t, noteInactif: t, envoye: t, erreur: t, sujet: t }),
     }),
     publications: z.object({
       titre: t, intro: t, introAuteurs: t, descriptionTout: t, aucunResultat: t,

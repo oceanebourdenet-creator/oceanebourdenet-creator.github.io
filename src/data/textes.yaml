@@ -26,6 +26,49 @@ accueil:
     bouton: Envoyer
     note: Votre adresse sert uniquement à vous répondre.
     noteInactif: Le formulaire sera actif une fois relié à Formspree.
+    envoye: Merci, votre message est bien envoyé. Je vous réponds au plus vite.
+    erreur: L’envoi n’a pas fonctionné. Vérifiez votre adresse e-mail et réessayez
+      dans un instant.
+    sujet: Nouveau message depuis le portfolio
+  competencesCles:
+    - OSINT et vérification
+    - Tournage α7 · GH5
+    - Montage Premiere Pro
+    - Motion design After Effects
+    - Référencement SEO
+    - Journalisme mobile
+    - Drone A1/A3
+    - Data viz Flourish
+  methode:
+    titre: De l'idée à la publication
+    sousTitre: en passant par le tournage et le montage
+    intro: Sur chaque sujet, je fais tout, seule ou avec la rédaction.
+    etapes:
+      - titre: Le sujet et l'angle
+        texte: Je repère ce qui circule en ligne et sur le terrain, et je cherche ce qui
+          n'a pas encore été raconté.
+      - titre: Les recherches
+        texte: "Sources ouvertes, images satellites, données : je vérifie avant
+          d'écrire."
+        outils: OSINT
+      - titre: Le script
+        texte: J'écris un récit court, pensé pour le format vertical et un visionnage
+          sans le son.
+      - titre: Les sources
+        texte: Je contacte les personnes à interroger et je prépare les entretiens.
+      - titre: Le tournage
+        texte: Caméra ou smartphone selon le terrain, prise de son comprise.
+        outils: Sony α7 · Panasonic GH5 · kit Mojo · drone
+      - titre: Le montage
+        texte: Rythme, sous-titres, habillage.
+        outils: Premiere Pro
+      - titre: Le motion design
+        texte: Cartes, chiffres et titres animés.
+        outils: After Effects
+      - titre: La publication
+        texte: Une version par plateforme, avec un titre, une légende et des mots-clés
+          pensés pour le référencement.
+        outils: SEO · Instagram · TikTok · YouTube · WordPress
 publications:
   titre: Publications
   intro: "Vidéos pour les réseaux sociaux et articles. Sauf mention contraire, je

@@ -80,7 +80,6 @@ const champsCV = [
       { name: 'titre', label: 'Titre', type: 'string' }, { name: 'etablissement', label: 'Établissement', type: 'string' },
       { name: 'logos', label: 'Logos', type: 'image', options: { media: 'logos', multiple: true } }, ...periode] },
   ] },
-  { name: 'competencesCles', label: 'Compétences clés (accueil)', type: 'string', list: true },
   { name: 'competences', label: 'Compétences (page CV)', type: 'object', fields: [
     { name: 'phares', label: 'Compétences phares', type: 'object', list: { max: 3 }, fields: [
       { name: 'titre', label: 'Titre', type: 'string' },
@@ -105,11 +104,6 @@ const champsCV = [
     { name: 'description', label: 'Description', type: 'text' },
     { name: 'missions', label: 'Missions', type: 'string', list: true },
     { name: 'lien', label: 'Lien', type: 'object', fields: [{ name: 'libelle', label: 'Texte du lien', type: 'string' }, { name: 'url', label: 'Adresse', type: 'string' }] }] },
-  { name: 'methode', label: '« De l’idée à la publication » (accueil)', type: 'object', fields: [
-    { name: 'titre', label: 'Titre', type: 'string' }, { name: 'sousTitre', label: 'Sous-titre', type: 'string' },
-    { name: 'intro', label: 'Introduction', type: 'text' },
-    { name: 'etapes', label: 'Étapes', type: 'object', list: true, fields: [
-      { name: 'titre', label: 'Titre', type: 'string' }, { name: 'texte', label: 'Texte', type: 'text' }, { name: 'outils', label: 'Outils', type: 'string' }] }] },
 ];
 
 // Textes fixes des pages (src/data/textes.yaml)
@@ -118,6 +112,12 @@ const champsTextes = [
   { name: 'accueil', label: 'Accueil', type: 'object', fields: [
     s_('boutonPublications', 'Bouton « Voir les publications »'),
     s_('medias', 'Texte devant les logos des médias'),
+    { name: 'methode', label: '« De l’idée à la publication » (accueil)', type: 'object', fields: [
+    { name: 'titre', label: 'Titre', type: 'string' }, { name: 'sousTitre', label: 'Sous-titre', type: 'string' },
+    { name: 'intro', label: 'Introduction', type: 'text' },
+    { name: 'etapes', label: 'Étapes', type: 'object', list: true, fields: [
+      { name: 'titre', label: 'Titre', type: 'string' }, { name: 'texte', label: 'Texte', type: 'text' }, { name: 'outils', label: 'Outils', type: 'string' }] }] },
+    { name: 'competencesCles', label: 'Compétences clés (Parcours en bref)', type: 'string', list: true },
     { name: 'phares', label: 'Publications phares', type: 'object', fields: [s_('titre', 'Titre'), s_('intro', 'Introduction', 'text'), s_('lienTout', 'Lien vers toutes les publications')] },
     { name: 'chiffres', label: 'En chiffres', type: 'object', fields: [
       s_('titre', 'Titre'), s_('vues', 'Libellé des vues cumulées'), s_('likes', 'Libellé des j’aime cumulés'),
@@ -126,7 +126,8 @@ const champsTextes = [
       s_('titre', 'Titre'), s_('competencesCles', 'Titre « Compétences clés »'), s_('langues', 'Titre « Langues »'), s_('boutonCV', 'Bouton vers le CV')] },
     { name: 'contact', label: 'Contact', type: 'object', fields: [
       s_('titre', 'Titre'), s_('intro', 'Introduction', 'text'), s_('bouton', 'Bouton d’envoi'),
-      s_('note', 'Note sous le formulaire'), s_('noteInactif', 'Note quand le formulaire n’est pas encore relié')] },
+      s_('note', 'Note sous le formulaire'), s_('noteInactif', 'Note quand le formulaire n’est pas encore relié'),
+      s_('envoye', 'Message après un envoi réussi'), s_('erreur', 'Message en cas d’échec de l’envoi'), s_('sujet', 'Objet de l’e-mail reçu')] },
   ] },
   { name: 'publications', label: 'Page Publications', type: 'object', fields: [
     s_('titre', 'Titre'), s_('intro', 'Introduction', 'text'),

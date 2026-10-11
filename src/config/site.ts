@@ -8,5 +8,5 @@ export const site = {
   // Masquer les cartes « lien mort » sans archive au lieu de les afficher non cliquables (brief 5.8).
   masquerLiensMortsSansArchive: false,
   // Formspree : identifiant du formulaire de contact (à créer sur formspree.io).
-  formspree: "",
+  formspree: "xyekpnkb",
 };
