@@ -8,14 +8,15 @@ import Lecteur from './Lecteur.astro';
 import { Image } from 'astro:assets';
 import { getEntry } from 'astro:content';
 import { categories, categorieParSlug, type CategorieSlug } from '../config/categories';
-import { site } from '../config/site';
 import { libelleCompetence, estTechnique } from '../config/competences';
 import { slug } from '../lib/format';
+import { textes } from '../lib/textes';
 import { publications, series, entrees, coulissesDe, toutesCompetences, FORMATS } from '../lib/publications';
 
 interface Props { categorie?: CategorieSlug }
 const { categorie } = Astro.props;
 const cv = (await getEntry('cv', 'cv'))!.data;
+const T = (await textes()).publications;
 const pubs = await publications();
 const toutesSeries = await series();
 const liste = categorie ? pubs.filter((p) => p.data.categorie === categorie) : pubs;
@@ -40,10 +41,10 @@ let annee = '';
 ---
 <div class="wrap">
   <header class="page-head">
-    <h1>{categorie ? categorieParSlug[categorie].libelle : 'Publications'}</h1>
-    <p>Vidéos pour les réseaux sociaux et articles. Sauf mention contraire, je réalise mes vidéos de A à Z : {site.roleParDefaut}.</p>
+    <h1>{categorie ? categorieParSlug[categorie].libelle : T.titre}</h1>
+    <p>{T.intro}</p>
     {auteurs.length > 0 && (
-      <p class="auteurs-intro">Une sélection de mon travail. Tous mes articles sont sur {auteurs.map((x, i) => (
+      <p class="auteurs-intro">{T.introAuteurs} {auteurs.map((x, i) => (
         <>{i > 0 && (i === auteurs.length - 1 ? ' et ' : ', ')}<a href={x.pageAuteur} target="_blank" rel="noopener noreferrer">{x.media} ↗</a></>
       ))}.</p>
     )}
@@ -53,7 +54,7 @@ let annee = '';
     <a href="/publications/" aria-current={!categorie ? 'true' : undefined}>Tout <span>{total}</span></a>
     {onglets.map((c) => <a href={`/publications/${c.slug}/`} aria-current={categorie === c.slug ? 'true' : undefined}>{c.libelle} <span>{c.n}</span></a>)}
   </nav>
-  <p class="cat-desc">{categorie ? categorieParSlug[categorie].description : 'Enquêtes, tendances, reportages et témoignages, du plus récent au plus ancien.'}</p>
+  <p class="cat-desc">{categorie ? categorieParSlug[categorie].description : T.descriptionTout}</p>
 
   <div class="filters" data-filtres hidden>
     <label for="f-media">Média
@@ -106,13 +107,13 @@ let annee = '';
       );
     })}
   </div>
-  <p class="empty" data-vide hidden>Aucune publication ne correspond à ces filtres.</p>
+  <p class="empty" data-vide hidden>{T.aucunResultat}</p>
   <div data-auteurs-bas>
     {auteurs.length > 0 && (
       <section class="auteurs" aria-labelledby="t-auteurs" data-auteurs>
         <div class="auteurs-head">
-          <h2 id="t-auteurs">Tous mes articles</h2>
-          <p>Ici, une sélection. L'ensemble de mes articles est publié sur les sites des médias.</p>
+          <h2 id="t-auteurs">{T.tousArticles.titre}</h2>
+          <p>{T.tousArticles.texte}</p>
         </div>
         <ul>
           {auteurs.map((x) => (

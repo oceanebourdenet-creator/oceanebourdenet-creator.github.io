@@ -112,6 +112,36 @@ const champsCV = [
       { name: 'titre', label: 'Titre', type: 'string' }, { name: 'texte', label: 'Texte', type: 'text' }, { name: 'outils', label: 'Outils', type: 'string' }] }] },
 ];
 
+// Textes fixes des pages (src/data/textes.yaml)
+const s_ = (name, label, type = 'string') => ({ name, label, type, required: true });
+const champsTextes = [
+  { name: 'accueil', label: 'Accueil', type: 'object', fields: [
+    s_('boutonPublications', 'Bouton « Voir les publications »'),
+    s_('medias', 'Texte devant les logos des médias'),
+    { name: 'phares', label: 'Publications phares', type: 'object', fields: [s_('titre', 'Titre'), s_('intro', 'Introduction', 'text'), s_('lienTout', 'Lien vers toutes les publications')] },
+    { name: 'chiffres', label: 'En chiffres', type: 'object', fields: [
+      s_('titre', 'Titre'), s_('vues', 'Libellé des vues cumulées'), s_('likes', 'Libellé des j’aime cumulés'),
+      s_('annees', 'Libellé des années d’expérience'), s_('redactions', 'Libellé du nombre de rédactions'), s_('note', 'Note sous les chiffres', 'text')] },
+    { name: 'parcours', label: 'Parcours en bref', type: 'object', fields: [
+      s_('titre', 'Titre'), s_('competencesCles', 'Titre « Compétences clés »'), s_('langues', 'Titre « Langues »'), s_('boutonCV', 'Bouton vers le CV')] },
+    { name: 'contact', label: 'Contact', type: 'object', fields: [
+      s_('titre', 'Titre'), s_('intro', 'Introduction', 'text'), s_('bouton', 'Bouton d’envoi'),
+      s_('note', 'Note sous le formulaire'), s_('noteInactif', 'Note quand le formulaire n’est pas encore relié')] },
+  ] },
+  { name: 'publications', label: 'Page Publications', type: 'object', fields: [
+    s_('titre', 'Titre'), s_('intro', 'Introduction', 'text'),
+    s_('introAuteurs', 'Début de la phrase vers les pages auteur'), s_('descriptionTout', 'Description de l’onglet « Tout »', 'text'),
+    s_('aucunResultat', 'Message quand aucun résultat'),
+    { name: 'tousArticles', label: 'Bloc « Tous mes articles »', type: 'object', fields: [s_('titre', 'Titre'), s_('texte', 'Texte', 'text')] },
+  ] },
+  { name: 'cv', label: 'Page CV', type: 'object', fields: [
+    s_('competencesIntro', 'Introduction des groupes de compétences', 'text'),
+    { name: 'savoirEtre', label: 'Savoir-être', type: 'object', fields: [s_('titre', 'Titre'), s_('texte', 'Texte', 'text')] },
+  ] },
+  { name: 'mentionsLegales', label: 'Mentions légales', type: 'object', list: true, fields: [s_('titre', 'Titre'), s_('texte', 'Texte', 'text')] },
+  { name: 'page404', label: 'Page introuvable (404)', type: 'object', fields: [s_('titre', 'Titre'), s_('texte', 'Texte', 'text')] },
+];
+
 const config = {
   media: [
     { name: 'publications', label: 'Images des publications', input: 'src/assets/publications', output: '/publications', categories: ['image'], rename: 'safe' },
@@ -130,6 +160,7 @@ const config = {
         { name: 'coulisses', label: 'Les coulisses', type: 'text' },
         { name: 'phare', label: 'Position dans les publications phares', type: 'number' }] },
     { name: 'cv', label: 'CV', type: 'file', path: 'src/data/cv.yaml', format: 'yaml', fields: champsCV },
+    { name: 'textes', label: 'Textes du site', type: 'file', path: 'src/data/textes.yaml', format: 'yaml', fields: champsTextes },
   ],
 };
 

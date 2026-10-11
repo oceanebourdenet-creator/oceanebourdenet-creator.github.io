@@ -10,10 +10,12 @@ import { getEntry } from 'astro:content';
 import photo from '../assets/photo.jpg';
 import { categories } from '../config/categories';
 import { site } from '../config/site';
+import { textes } from '../lib/textes';
 import { plusDe, periode, anneeDebut } from '../lib/format';
 import { publications, series, coulissesDe, entrees } from '../lib/publications';
 
 const cv = (await getEntry('cv', 'cv'))!.data;
+const T = (await textes()).accueil;
 const pubs = await publications();
 const toutesSeries = await series();
 
@@ -46,7 +48,7 @@ const redactions = cv.experiences.filter((x) => x.logo);
         <h1>{cv.profil.nom.split(' ')[0]} <em>{cv.profil.nom.split(' ').slice(1).join(' ')}</em></h1>
         <p class="hero-hook">{cv.profil.accroche}</p>
         <div class="hero-actions">
-          <a class="btn" href="/publications/">Voir les publications</a>
+          <a class="btn" href="/publications/">{T.boutonPublications}</a>
           <ul class="socials" aria-label="Réseaux">
             {cv.profil.reseaux.map((r) => <li><a href={r.url} target="_blank" rel="noopener noreferrer">{r.nom} ↗</a></li>)}
           </ul>
@@ -60,7 +62,7 @@ const redactions = cv.experiences.filter((x) => x.logo);
 
   <section class="medias" aria-label="Médias">
     <div class="wrap">
-      <p>J'ai travaillé pour</p>
+      <p>{T.medias}</p>
       <ul class="logos">
         {redactions.map((x) => <li><Image src={image(x.logo)!} alt={x.media} height={30} class="logo-media" /></li>)}
       </ul>
@@ -71,13 +73,13 @@ const redactions = cv.experiences.filter((x) => x.logo);
     <div class="wrap">
       <div class="section-head">
         <div>
-          <h2 id="t-phares">Publications phares</h2>
-          <p>Une sélection de vidéos et d'articles. Je réalise mes vidéos de A à Z : {site.roleParDefaut}.</p>
+          <h2 id="t-phares">{T.phares.titre}</h2>
+          <p>{T.phares.intro}</p>
         </div>
         <div class="rail-nav">
           <button class="rail-btn" type="button" data-rail="-1" aria-label="Publications précédentes" aria-controls="phares">←</button>
           <button class="rail-btn" type="button" data-rail="1" aria-label="Publications suivantes" aria-controls="phares">→</button>
-          <a class="more" href="/publications/">Voir toutes les publications</a>
+          <a class="more" href="/publications/">{T.phares.lienTout}</a>
         </div>
       </div>
       <ul class="catlinks" aria-label="Catégories">
@@ -108,20 +110,20 @@ const redactions = cv.experiences.filter((x) => x.logo);
 
   <section class="section" aria-labelledby="t-chiffres">
     <div class="wrap">
-      <div class="section-head"><h2 id="t-chiffres">En chiffres</h2></div>
+      <div class="section-head"><h2 id="t-chiffres">{T.chiffres.titre}</h2></div>
       <ul class="kpis">
-        {vues > 0 && <li><strong>+ {plusDe(vues)}</strong><span>vues cumulées sur Instagram</span></li>}
-        {likes > 0 && <li><strong>+ {plusDe(likes)}</strong><span>j'aime cumulés sur Instagram</span></li>}
-        <li><strong>{annees}</strong><span>ans d'expérience en rédaction</span></li>
-        <li><strong>{redactions.length}</strong><span>rédactions, en France, au Liban et en Égypte</span></li>
+        {vues > 0 && <li><strong>+ {plusDe(vues)}</strong><span>{T.chiffres.vues}</span></li>}
+        {likes > 0 && <li><strong>+ {plusDe(likes)}</strong><span>{T.chiffres.likes}</span></li>}
+        <li><strong>{annees}</strong><span>{T.chiffres.annees}</span></li>
+        <li><strong>{redactions.length}</strong><span>{T.chiffres.redactions}</span></li>
       </ul>
-      <p class="kpis-note">Chiffres publics relevés en octobre 2026, uniquement pour les publications où l'affichage est activé.</p>
+      <p class="kpis-note">{T.chiffres.note}</p>
     </div>
   </section>
 
   <section class="section" aria-labelledby="t-parcours">
     <div class="wrap">
-      <div class="section-head"><h2 id="t-parcours">Parcours en bref</h2></div>
+      <div class="section-head"><h2 id="t-parcours">{T.parcours.titre}</h2></div>
       <div class="brief">
         <ul class="xp-list">
           {cv.experiences.map((x) => (
@@ -135,12 +137,12 @@ const redactions = cv.experiences.filter((x) => x.logo);
           ))}
         </ul>
         <div class="keyskills">
-          <h3>Compétences clés</h3>
+          <h3>{T.parcours.competencesCles}</h3>
           <ul>{cv.competencesCles.map((c) => <li>{c}</li>)}</ul>
-          <h3>Langues</h3>
+          <h3>{T.parcours.langues}</h3>
           <ul>{cv.langues.map((l) => <li>{l.langue} {l.niveau}</li>)}</ul>
           <div class="brief-actions">
-            <a class="btn btn--ghost" href="/cv/">Voir le CV complet</a>
+            <a class="btn btn--ghost" href="/cv/">{T.parcours.boutonCV}</a>
           </div>
         </div>
       </div>
@@ -150,8 +152,8 @@ const redactions = cv.experiences.filter((x) => x.logo);
   <section class="section" id="contact" aria-labelledby="t-contact">
     <div class="wrap contact">
       <div class="contact-intro">
-        <h2 id="t-contact">Contact</h2>
-        <p>Pour un poste, une pige ou une proposition de sujet, écrivez-moi avec ce formulaire. Je réponds sous quelques jours.</p>
+        <h2 id="t-contact">{T.contact.titre}</h2>
+        <p>{T.contact.intro}</p>
       </div>
       <form class="form" method="POST" action={site.formspree ? `https://formspree.io/f/${site.formspree}` : undefined}>
         <div class="row">
@@ -159,8 +161,8 @@ const redactions = cv.experiences.filter((x) => x.logo);
           <label for="c-mail">E-mail<input id="c-mail" name="email" type="email" autocomplete="email" required /></label>
         </div>
         <label for="c-msg">Message<textarea id="c-msg" name="message" required></textarea></label>
-        <button class="btn" type="submit" disabled={!site.formspree}>Envoyer</button>
-        <p class="form-note">{site.formspree ? 'Votre adresse sert uniquement à vous répondre.' : 'Le formulaire sera actif une fois relié à Formspree.'}</p>
+        <button class="btn" type="submit" disabled={!site.formspree}>{T.contact.bouton}</button>
+        <p class="form-note">{site.formspree ? T.contact.note : T.contact.noteInactif}</p>
       </form>
     </div>
   </section>

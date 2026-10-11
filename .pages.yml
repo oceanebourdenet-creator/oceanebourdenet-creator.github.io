@@ -757,3 +757,190 @@ content:
               - name: "outils"
                 label: "Outils"
                 type: "string"
+  - name: "textes"
+    label: "Textes du site"
+    type: "file"
+    path: "src/data/textes.yaml"
+    format: "yaml"
+    fields:
+      - name: "accueil"
+        label: "Accueil"
+        type: "object"
+        fields:
+          - name: "boutonPublications"
+            label: "Bouton « Voir les publications »"
+            type: "string"
+            required: true
+          - name: "medias"
+            label: "Texte devant les logos des médias"
+            type: "string"
+            required: true
+          - name: "phares"
+            label: "Publications phares"
+            type: "object"
+            fields:
+              - name: "titre"
+                label: "Titre"
+                type: "string"
+                required: true
+              - name: "intro"
+                label: "Introduction"
+                type: "text"
+                required: true
+              - name: "lienTout"
+                label: "Lien vers toutes les publications"
+                type: "string"
+                required: true
+          - name: "chiffres"
+            label: "En chiffres"
+            type: "object"
+            fields:
+              - name: "titre"
+                label: "Titre"
+                type: "string"
+                required: true
+              - name: "vues"
+                label: "Libellé des vues cumulées"
+                type: "string"
+                required: true
+              - name: "likes"
+                label: "Libellé des j’aime cumulés"
+                type: "string"
+                required: true
+              - name: "annees"
+                label: "Libellé des années d’expérience"
+                type: "string"
+                required: true
+              - name: "redactions"
+                label: "Libellé du nombre de rédactions"
+                type: "string"
+                required: true
+              - name: "note"
+                label: "Note sous les chiffres"
+                type: "text"
+                required: true
+          - name: "parcours"
+            label: "Parcours en bref"
+            type: "object"
+            fields:
+              - name: "titre"
+                label: "Titre"
+                type: "string"
+                required: true
+              - name: "competencesCles"
+                label: "Titre « Compétences clés »"
+                type: "string"
+                required: true
+              - name: "langues"
+                label: "Titre « Langues »"
+                type: "string"
+                required: true
+              - name: "boutonCV"
+                label: "Bouton vers le CV"
+                type: "string"
+                required: true
+          - name: "contact"
+            label: "Contact"
+            type: "object"
+            fields:
+              - name: "titre"
+                label: "Titre"
+                type: "string"
+                required: true
+              - name: "intro"
+                label: "Introduction"
+                type: "text"
+                required: true
+              - name: "bouton"
+                label: "Bouton d’envoi"
+                type: "string"
+                required: true
+              - name: "note"
+                label: "Note sous le formulaire"
+                type: "string"
+                required: true
+              - name: "noteInactif"
+                label: "Note quand le formulaire n’est pas encore relié"
+                type: "string"
+                required: true
+      - name: "publications"
+        label: "Page Publications"
+        type: "object"
+        fields:
+          - name: "titre"
+            label: "Titre"
+            type: "string"
+            required: true
+          - name: "intro"
+            label: "Introduction"
+            type: "text"
+            required: true
+          - name: "introAuteurs"
+            label: "Début de la phrase vers les pages auteur"
+            type: "string"
+            required: true
+          - name: "descriptionTout"
+            label: "Description de l’onglet « Tout »"
+            type: "text"
+            required: true
+          - name: "aucunResultat"
+            label: "Message quand aucun résultat"
+            type: "string"
+            required: true
+          - name: "tousArticles"
+            label: "Bloc « Tous mes articles »"
+            type: "object"
+            fields:
+              - name: "titre"
+                label: "Titre"
+                type: "string"
+                required: true
+              - name: "texte"
+                label: "Texte"
+                type: "text"
+                required: true
+      - name: "cv"
+        label: "Page CV"
+        type: "object"
+        fields:
+          - name: "competencesIntro"
+            label: "Introduction des groupes de compétences"
+            type: "text"
+            required: true
+          - name: "savoirEtre"
+            label: "Savoir-être"
+            type: "object"
+            fields:
+              - name: "titre"
+                label: "Titre"
+                type: "string"
+                required: true
+              - name: "texte"
+                label: "Texte"
+                type: "text"
+                required: true
+      - name: "mentionsLegales"
+        label: "Mentions légales"
+        type: "object"
+        list: true
+        fields:
+          - name: "titre"
+            label: "Titre"
+            type: "string"
+            required: true
+          - name: "texte"
+            label: "Texte"
+            type: "text"
+            required: true
+      - name: "page404"
+        label: "Page introuvable (404)"
+        type: "object"
+        fields:
+          - name: "titre"
+            label: "Titre"
+            type: "string"
+            required: true
+          - name: "texte"
+            label: "Texte"
+            type: "text"
+            required: true

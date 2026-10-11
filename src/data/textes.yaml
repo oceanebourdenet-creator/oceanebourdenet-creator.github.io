@@ -1,0 +1,52 @@
+# Textes fixes du site, modifiables dans Pages CMS (« Textes du site »).
+accueil:
+  boutonPublications: "Voir les publications"
+  medias: "J'ai travaillé pour"
+  phares:
+    titre: "Publications phares"
+    intro: "Une sélection de vidéos et d'articles. Je réalise mes vidéos de A à Z : sujet, script, tournage, montage et motion design."
+    lienTout: "Voir toutes les publications"
+  chiffres:
+    titre: "En chiffres"
+    vues: "vues cumulées sur Instagram"
+    likes: "j'aime cumulés sur Instagram"
+    annees: "ans d'expérience en rédaction"
+    redactions: "rédactions, en France, au Liban et en Égypte"
+    note: "Chiffres publics relevés en octobre 2026, uniquement pour les publications où l'affichage est activé."
+  parcours:
+    titre: "Parcours en bref"
+    competencesCles: "Compétences clés"
+    langues: "Langues"
+    boutonCV: "Voir le CV complet"
+  contact:
+    titre: "Contact"
+    intro: "Pour un poste, une pige ou une proposition de sujet, écrivez-moi avec ce formulaire. Je réponds sous quelques jours."
+    bouton: "Envoyer"
+    note: "Votre adresse sert uniquement à vous répondre."
+    noteInactif: "Le formulaire sera actif une fois relié à Formspree."
+publications:
+  titre: "Publications"
+  intro: "Vidéos pour les réseaux sociaux et articles. Sauf mention contraire, je réalise mes vidéos de A à Z : sujet, script, tournage, montage et motion design."
+  introAuteurs: "Une sélection de mon travail. Tous mes articles sont sur"
+  descriptionTout: "Enquêtes, tendances, reportages et témoignages, du plus récent au plus ancien."
+  aucunResultat: "Aucune publication ne correspond à ces filtres."
+  tousArticles:
+    titre: "Tous mes articles"
+    texte: "Ici, une sélection. L'ensemble de mes articles est publié sur les sites des médias."
+cv:
+  competencesIntro: "Rangées selon ma façon de travailler, de l'idée à la publication. Le chiffre renvoie aux publications où je les ai utilisées."
+  savoirEtre:
+    titre: "Savoir-être"
+    texte: "Calculés à partir des fiches de publication. Cliquer pour voir les publications concernées."
+mentionsLegales:
+  - titre: "Éditrice du site"
+    texte: "Océane Bourdenet, journaliste. Contact : via le formulaire de contact de la page d'accueil."
+  - titre: "Hébergement"
+    texte: "GitHub Inc., 88 Colin P. Kelly Jr. Street, San Francisco, CA 94107, États-Unis."
+  - titre: "Contenus et droits"
+    texte: "Les publications présentées appartiennent aux médias qui les ont diffusées. Chaque carte renvoie vers la publication d'origine. Les images d'aperçu restent la propriété de leurs auteurs."
+  - titre: "Données personnelles et cookies"
+    texte: "Ce site ne dépose aucun cookie et n'utilise aucun outil de mesure d'audience. Les vidéos intégrées (Instagram, YouTube, TikTok) ne se chargent qu'au clic ; ces plateformes peuvent alors déposer leurs propres cookies. Les messages envoyés par le formulaire de contact servent uniquement à vous répondre."
+page404:
+  titre: "Page introuvable"
+  texte: "Cette page n'existe pas ou a été déplacée."

@@ -8,8 +8,10 @@ import { periode, slug } from '../lib/format';
 import { libelleCompetence } from '../config/competences';
 import { publications, toutesCompetences } from '../lib/publications';
 import photo from '../assets/photo.jpg';
+import { textes } from '../lib/textes';
 
 const cv = (await getEntry('cv', 'cv'))!.data;
+const T = (await textes()).cv;
 const pubs = await publications();
 const nbPreuves = (cle?: string) => (cle ? pubs.filter((p) => toutesCompetences(p).includes(cle)).length : 0);
 const nbMedia = (media: string) => pubs.filter((p) => slug(p.data.media) === slug(media)).length;
@@ -79,7 +81,7 @@ const NIVEAUX = ['A1', 'A2', 'B1', 'B2', 'C1', 'C2'];
             );
           })}
         </ul>
-        <p class="sk-intro">Rangées selon ma façon de travailler, de l'idée à la publication. Le chiffre renvoie aux publications où je les ai utilisées.</p>
+        <p class="sk-intro">{T.competencesIntro}</p>
         <div class="skill-groups">
           {cv.competences.groupes.map((g, i) => (
             <div class="sk-groupe">
@@ -100,8 +102,8 @@ const NIVEAUX = ['A1', 'A2', 'B1', 'B2', 'C1', 'C2'];
           ))}
         </div>
         <div class="soft">
-          <h3>Savoir-être</h3>
-          <p>Calculés à partir des fiches de publication. Cliquer pour voir les publications concernées.</p>
+          <h3>{T.savoirEtre.titre}</h3>
+          <p>{T.savoirEtre.texte}</p>
           <ul>
             {[...savoirEtre.entries()].sort((a, b) => b[1] - a[1]).map(([k, n]) => (
               <li><a href={`/publications/?competence=${k}`}>{libelleCompetence(k)} <span>{n}</span></a></li>

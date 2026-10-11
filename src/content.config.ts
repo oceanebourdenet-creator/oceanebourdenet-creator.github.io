@@ -156,4 +156,25 @@ const cv = defineCollection({
     }),
 });
 
-export const collections = { publications, series, cv };
+const t = z.string();
+const textes = defineCollection({
+  loader: glob({ base: './src/data', pattern: 'textes.yaml' }),
+  schema: z.object({
+    accueil: z.object({
+      boutonPublications: t, medias: t,
+      phares: z.object({ titre: t, intro: t, lienTout: t }),
+      chiffres: z.object({ titre: t, vues: t, likes: t, annees: t, redactions: t, note: t }),
+      parcours: z.object({ titre: t, competencesCles: t, langues: t, boutonCV: t }),
+      contact: z.object({ titre: t, intro: t, bouton: t, note: t, noteInactif: t }),
+    }),
+    publications: z.object({
+      titre: t, intro: t, introAuteurs: t, descriptionTout: t, aucunResultat: t,
+      tousArticles: z.object({ titre: t, texte: t }),
+    }),
+    cv: z.object({ competencesIntro: t, savoirEtre: z.object({ titre: t, texte: t }) }),
+    mentionsLegales: z.array(z.object({ titre: t, texte: t })),
+    page404: z.object({ titre: t, texte: t }),
+  }),
+});
+
+export const collections = { publications, series, cv, textes };
