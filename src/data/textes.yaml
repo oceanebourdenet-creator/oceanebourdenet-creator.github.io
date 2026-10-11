@@ -7,18 +7,16 @@ accueil:
     intro: Sur chaque sujet, je fais tout, seule ou avec la rédaction.
     etapes:
       - titre: Le sujet et l'angle
-        texte: Je repère les actualités qui circulent sur les réseaux sociaux. Je
-          contacte ensuite les primo-diffuseurs afin d’obtenir davantage
-          d’informations et d’en vérifier l’authenticité. Je recoupe les
-          informations recueillies, puis je définis un angle.
+        texte: Je repère les actualités sur les réseaux sociaux. Je contacte les
+          primo-diffuseurs pour obtenir plus d’informations et en vérifier
+          l’authenticité. Je recoupe les informations, puis je définis un angle.
         outils: X, TikTok, agences de presse, médias internationaux
       - titre: Les recherches
-        texte: Mon travail s’appuie sur des données en sources ouvertes (OSINT). Pour en
-          vérifier l’authenticité, j’utilise des outils qui analysent des
-          textes, des fichiers audio et des images. Ces outils m’aident à
-          retrouver l’origine des contenus grâce à la recherche inversée et à
-          détecter ceux qui ont été générés par l’IA. Je fais également appel à
-          des experts lorsque le sujet le nécessite.
+        texte: J'utilise des données en sources ouvertes (OSINT) et des outils qui
+          analysent des textes, des fichiers audio et des images pour en
+          l’origine des contenus grâce à la recherche inversée et à détecter
+          ceux qui ont été générés par l’IA. Je fais également appel à des
+          experts lorsque le sujet le nécessite.
         outils: Telegram, X, InVID, SynthID
       - titre: Le script
         texte: Une fois mon sujet identifié et mes informations vérifiées, je passe à
