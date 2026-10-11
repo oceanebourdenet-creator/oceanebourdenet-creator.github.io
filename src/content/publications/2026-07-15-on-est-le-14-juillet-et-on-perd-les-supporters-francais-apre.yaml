@@ -1,27 +1,35 @@
-titre: "« On est le 14 juillet et on perd » : les supporters français après France-Espagne"
-media: "TV5MONDE"
+titre: '"On est le 14 juillet et on perd" : Les supporters français après
+  France-Espagne'
+media: TV5MONDE
 date: 2026-07-15
-url: "https://www.instagram.com/reel/DazpijzN3LA/"
-categorie: "reportages"
-format: "video"
-plateforme: "instagram"
-embed: "DazpijzN3LA"
+url: https://www.instagram.com/reel/DazpijzN3LA/
+categorie: reportages
+format: video
+accroche: J’ai couvert l’élimination de la France en demi-finale du Mondial face
+  à l’Espagne. Une défaite 2-0 qui n’a pas empêché les supporters de faire la
+  fête à Paris.
+coulisses: "Pour la demi-finale de la Coupe du monde, j'ai fait un reportage sur
+  le terrain avec des supporters de la France. J'avais cherché mes
+  interlocuteurs en amont. L'enjeu : tourner à l'iPhone avec micro et lumière,
+  puis revenir à la rédaction et monter sur Premiere Pro en moins de 24 heures."
+image: /publications/ig-DazpijzN3LA.jpg
+plateforme: instagram
+embed: DazpijzN3LA
+vertical: false
 collaboration: true
 phare: 3
-accroche: "TV5MONDE a assisté à l'élimination de la France en demi-finale du Mondial, face à l'Espagne. Une défaite 2-0 qui n'a pas empêché les supporters français réunis à Paris de faire la fête."
-coulisses: "Pour la demi-finale de la Coupe du monde, j'ai fait un reportage sur le terrain avec des supporters de la France. J'avais cherché mes interlocuteurs en amont. L'enjeu : tourner à l'iPhone avec micro et lumière, puis revenir à la rédaction et monter sur Premiere Pro en moins de 24 heures."
-image: "/publications/ig-DazpijzN3LA.jpg"
+competences:
+  techniques:
+    - mojo
+    - interview
+    - montage
+  humaines:
+    - reactivite
+    - aisance
+afficherChiffres: true
 vues: 1000000
 likes: 17036
 commentaires: 11
 dateChiffres: 2026-10-10
-sourceChiffres: "public"
-afficherChiffres: true
-competences:
-  techniques:
-    - "mojo"
-    - "interview"
-    - "montage"
-  humaines:
-    - "reactivite"
-    - "aisance"
+sourceChiffres: public
+lienMort: false
