@@ -29,7 +29,7 @@ accueil:
       - titre: Le tournage
         texte: Je réalise mes tournages à la caméra ou au smartphone, selon les
           contraintes du terrain, en assurant également la prise de son.
-        outils: Sony α7 · Panasonic GH5 · kit Mojo · drone
+        outils: Sony Alpha 7, Panasonic GH5, Kit Mojo
       - titre: Le montage
         texte: Je m’occupe du montage, de la collecte des images, du rythme, des
           sous-titres et de l’habillage.
@@ -37,10 +37,6 @@ accueil:
       - titre: Le motion design
         texte: Cartes, chiffres et titres animés.
         outils: After Effects
-      - titre: La publication
-        texte: Une version par plateforme, avec un titre, une légende et des mots-clés
-          pensés pour le référencement.
-        outils: SEO · Instagram · TikTok · YouTube · WordPress
   competencesCles:
     - OSINT et vérification
     - Tournage α7 · GH5
