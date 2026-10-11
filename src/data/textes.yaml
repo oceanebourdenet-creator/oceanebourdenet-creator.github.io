@@ -11,11 +11,10 @@ accueil:
           primo-diffuseurs pour obtenir plus d’informations et en vérifier
           l’authenticité. Je recoupe les informations, puis je définis un angle.
         outils: X, TikTok, agences de presse, médias internationaux
-      - titre: Les recherches
-        texte: J'utilise des données en sources ouvertes (OSINT) et des outils qui
-          analysent des textes, des fichiers audio et des images pour en tracer
-          l’origine. Je fais également appel à des experts lorsque le sujet le
-          nécessite.
+      - titre: Les recherches (OSINT)
+        texte: Je collecte des données issues de sources ouvertes (OSINT). J’utilise des
+          outils pour retracer l’origine des textes, des fichiers audio et des
+          images. Je fais également appel à des experts.
         outils: Telegram, X, Discord, outils IA (InVID, SynthID, etc.)
       - titre: Le script
         texte: Une fois mon sujet identifié et mes informations vérifiées, je passe à
