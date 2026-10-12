@@ -64,7 +64,7 @@ const redactions = cv.experiences.filter((x) => x.logo);
     <div class="wrap">
       <p>{T.medias}</p>
       <ul class="logos">
-        {redactions.map((x) => <li><Image src={image(x.logo)!} alt={x.media} height={30} class="logo-media" /></li>)}
+        {redactions.map((x) => <li><Image src={image(x.logo)!} alt={x.media} height={30} densities={[1, 2]} class="logo-media" /></li>)}
       </ul>
     </div>
   </section>
@@ -130,7 +130,7 @@ const redactions = cv.experiences.filter((x) => x.logo);
             <li>
               <span class="xp-date">{periode(x.debut, x.fin, true)}</span>
               <div>
-                {image(x.logo) ? <Image class="xp-logo" src={image(x.logo)!} alt={x.media} height={26} /> : <p class="xp-media">{x.media}</p>}
+                {image(x.logo) ? <Image class="xp-logo" src={image(x.logo)!} alt={x.media} height={26} densities={[1, 2]} /> : <p class="xp-media">{x.media}</p>}
                 <p class="xp-role">{x.poste} · {x.type} · {x.lieu}</p>
               </div>
             </li>
