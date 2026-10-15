@@ -12,6 +12,11 @@ profil:
   reseaux:
     - nom: LinkedIn
       url: https://fr.linkedin.com/in/oc%C3%A9ane-bourdenet-6babb7200
+  photo: /photos/oceane-bourdenet-camera.jpg
+  cadrage:
+    x: 69.5
+    y: 45
+    zoom: 3
 experiences:
   - media: Journaliste pigiste
     poste: Piges pour TV5MONDE

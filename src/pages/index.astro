@@ -7,7 +7,6 @@ import SerieCard from '../components/SerieCard.astro';
 import Lecteur from '../components/Lecteur.astro';
 import { Image } from 'astro:assets';
 import { getEntry } from 'astro:content';
-import photo from '../assets/photo.jpg';
 import { categories } from '../config/categories';
 import { site } from '../config/site';
 import { textes } from '../lib/textes';
@@ -16,6 +15,8 @@ import { publications, series, coulissesDe, entrees } from '../lib/publications'
 
 const cv = (await getEntry('cv', 'cv'))!.data;
 const T = (await textes()).accueil;
+const photo = image(cv.profil.photo)!;
+const cadrage = `--fx:${cv.profil.cadrage.x / 100};--fy:${cv.profil.cadrage.y / 100};--zoom:${cv.profil.cadrage.zoom};--ratio:${photo.height / photo.width}`;
 const pubs = await publications();
 const toutesSeries = await series();
 
@@ -54,8 +55,8 @@ const redactions = cv.experiences.filter((x) => x.logo);
           </ul>
         </div>
       </div>
-      <div class="photo">
-        <Image src={photo} alt={`${cv.profil.nom} en reportage, caméra en main, avec un badge Presse`} widths={[300, 600]} sizes="(max-width: 680px) 104px, 300px" format="webp" loading="eager" />
+      <div class="photo" style={cadrage}>
+        <Image src={photo} alt={`${cv.profil.nom} en reportage, caméra en main, avec un badge Presse`} widths={[300, 600, 960]} sizes="(max-width: 680px) 400px, 300px" format="webp" loading="eager" />
       </div>
     </div>
   </section>

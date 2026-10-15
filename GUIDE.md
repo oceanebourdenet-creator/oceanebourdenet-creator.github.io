@@ -71,6 +71,15 @@ Les vidéos apparaissent alors en une seule carte « Série » sur la page Publi
 - **Page auteur sur le site du média** : ajoute automatiquement un lien « Voir mes articles sur… » dans le CV et sur la page Publications.
 - Le **nom du média** d'une expérience doit être écrit comme dans les publications, pour afficher « Voir mes publications pour… ».
 
+### Changer la photo
+
+**CV → Profil → Photo** : envoyer la nouvelle photo (format portrait conseillé), puis régler **Cadrage de la photo** :
+
+- **Position horizontale / verticale du visage (%)** : où se trouve le visage dans la photo (0 = bord gauche ou haut, 100 = bord droit ou bas). Le site garde ce point visible et le centre dans la vignette ronde sur mobile.
+- **Zoom de la vignette ronde sur mobile** : entre 1 (photo entière) et 6. Autour de 3 pour bien voir le visage.
+
+Après l'enregistrement, vérifier le rendu sur téléphone et ajuster de quelques points si besoin.
+
 ---
 
 ## 5. Quand un article n'est plus en ligne

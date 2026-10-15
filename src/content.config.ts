@@ -28,7 +28,7 @@ const competences = z
 const coulisses = facultatif(z.string());
 
 // Image : chemin « /publications/fichier.jpg » ou « /logos/fichier.svg », fichier présent dans src/assets
-const cheminImage = (dossier: 'publications' | 'logos') =>
+const cheminImage = (dossier: 'publications' | 'logos' | 'photos') =>
   z
     .string()
     .regex(new RegExp(`^/${dossier}/[^/]+\\.(jpe?g|png|webp|avif|svg)$`, 'i'), `L’image doit être un chemin du type « /${dossier}/nom-du-fichier.jpg ».`)
@@ -106,6 +106,13 @@ const cv = defineCollection({
         accroche: z.string(),
         resume: z.string(),
         reseaux: z.array(z.object({ nom: z.string(), url: z.url() })).default([]),
+        photo: cheminImage('photos'),
+        // Cadrage : point à garder visible (en % de la largeur et de la hauteur) et zoom de la vignette ronde sur mobile
+        cadrage: z.object({
+          x: z.number().min(0).max(100).default(50),
+          y: z.number().min(0).max(100).default(40),
+          zoom: z.number().min(1).max(6).default(2.5),
+        }).default({ x: 50, y: 40, zoom: 2.5 }),
       }),
       experiences: z.array(
         z.object({

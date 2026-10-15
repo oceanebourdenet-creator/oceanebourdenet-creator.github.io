@@ -62,6 +62,11 @@ const champsCV = [
     { name: 'resume', label: 'Résumé du CV', type: 'text', required: true },
     { name: 'reseaux', label: 'Réseaux', type: 'object', list: true, fields: [
       { name: 'nom', label: 'Nom', type: 'string' }, { name: 'url', label: 'Lien', type: 'string' }] },
+    { name: 'photo', label: 'Photo', type: 'image', required: true, options: { media: 'photos' }, description: 'Photo affichée sur l’accueil et le CV. Format portrait conseillé.' },
+    { name: 'cadrage', label: 'Cadrage de la photo', type: 'object', fields: [
+      { name: 'x', label: 'Position horizontale du visage (%)', type: 'number', description: '0 = bord gauche, 50 = centre, 100 = bord droit.' },
+      { name: 'y', label: 'Position verticale du visage (%)', type: 'number', description: '0 = haut, 50 = milieu, 100 = bas.' },
+      { name: 'zoom', label: 'Zoom de la vignette ronde sur mobile', type: 'number', description: 'Entre 1 (photo entière) et 6. Ex. 3,5 pour bien voir le visage.' }] },
   ] },
   { name: 'experiences', label: 'Expériences', type: 'object', list: { collapsible: { collapsed: true, summary: '{media} · {poste}' } }, fields: [
     { name: 'media', label: 'Média', type: 'string', required: true }, logo,
@@ -147,6 +152,7 @@ const config = {
   media: [
     { name: 'publications', label: 'Images des publications', input: 'src/assets/publications', output: '/publications', categories: ['image'], rename: 'safe' },
     { name: 'logos', label: 'Logos', input: 'src/assets/logos', output: '/logos', categories: ['image'], rename: 'safe' },
+    { name: 'photos', label: 'Photos de profil', input: 'src/assets/photos', output: '/photos', categories: ['image'], rename: 'safe' },
   ],
   content: [
     { name: 'publications', label: 'Publications', type: 'collection', path: 'src/content/publications', format: 'yaml',

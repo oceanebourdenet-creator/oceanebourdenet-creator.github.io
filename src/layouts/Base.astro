@@ -6,7 +6,7 @@ import '@fontsource-variable/schibsted-grotesk';
 import '../styles/global.css';
 import { getEntry } from 'astro:content';
 import { getImage } from 'astro:assets';
-import photo from '../assets/photo.jpg';
+import { image } from '../lib/images';
 
 interface Props {
   title: string;
@@ -16,7 +16,7 @@ interface Props {
 const { title, description, page = 'autre' } = Astro.props;
 const cv = (await getEntry('cv', 'cv'))!.data;
 const canonical = new URL(Astro.url.pathname, Astro.site);
-const ogImage = await getImage({ src: photo, width: 1200, height: 630, fit: 'cover', format: 'jpeg' });
+const ogImage = await getImage({ src: image(cv.profil.photo)!, width: 1200, height: 630, fit: 'cover', position: 'top', format: 'jpeg' });
 const ogUrl = new URL(ogImage.src, Astro.site).href;
 // Données structurées Person (brief 8)
 const jsonLd = {

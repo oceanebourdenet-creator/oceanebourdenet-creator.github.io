@@ -7,11 +7,12 @@ import { getEntry } from 'astro:content';
 import { periode, slug } from '../lib/format';
 import { libelleCompetence } from '../config/competences';
 import { publications, toutesCompetences } from '../lib/publications';
-import photo from '../assets/photo.jpg';
 import { textes } from '../lib/textes';
 
 const cv = (await getEntry('cv', 'cv'))!.data;
 const T = (await textes()).cv;
+const photo = image(cv.profil.photo)!;
+const cadrage = `--fx:${cv.profil.cadrage.x / 100};--fy:${cv.profil.cadrage.y / 100};--zoom:${cv.profil.cadrage.zoom};--ratio:${photo.height / photo.width}`;
 const pubs = await publications();
 const nbPreuves = (cle?: string) => (cle ? pubs.filter((p) => toutesCompetences(p).includes(cle)).length : 0);
 const nbMedia = (media: string) => pubs.filter((p) => slug(p.data.media) === slug(media)).length;
@@ -34,8 +35,8 @@ const NIVEAUX = ['A1', 'A2', 'B1', 'B2', 'C1', 'C2'];
           {cv.profil.reseaux.map((r) => <a href={r.url} target="_blank" rel="noopener noreferrer">{r.nom} ↗</a>)}
         </p>
       </div>
-      <div class="photo cv-photo">
-        <Image src={photo} alt={`Portrait de ${cv.profil.nom} en reportage`} widths={[240, 480]} sizes="(max-width: 680px) 104px, 240px" format="webp" loading="eager" />
+      <div class="photo cv-photo" style={cadrage}>
+        <Image src={photo} alt={`Portrait de ${cv.profil.nom} en reportage`} widths={[240, 480, 960]} sizes="(max-width: 680px) 400px, 240px" format="webp" loading="eager" />
       </div>
     </header>
 

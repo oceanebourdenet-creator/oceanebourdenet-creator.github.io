@@ -89,7 +89,8 @@ p { margin: 0; }
 .socials a { font-size: 15px; color: var(--ink-2); text-decoration: none; }
 .socials a:hover { color: var(--accent-ink); }
 .photo { aspect-ratio: 4 / 5; background: var(--paper-2); border-radius: var(--radius); display: grid; place-items: center; position: relative; overflow: hidden; }
-.photo img { width: 100%; height: 100%; object-fit: cover; object-position: 68% 50%; }
+.photo img { width: 100%; height: 100%; object-fit: cover; object-position: calc(var(--fx, .5) * 100%) calc(var(--fy, .4) * 100%); }
+
 .photo small { position: absolute; bottom: 12px; left: 0; right: 0; text-align: center; font-size: 12px; color: var(--ink-2); }
 
 /* ---------- De l'idée à la publication ---------- */
@@ -393,8 +394,7 @@ ul.materiel li { display: inline-block; font-size: 13px; padding: 6px 9px; borde
   .nav ul a { font-size: 14px; display: inline-block; padding-block: 8px 6px; }
   .hero .wrap { grid-template-columns: minmax(0, 1fr); }
   .hero .photo { order: -1; width: 104px; aspect-ratio: 1; border-radius: 50%; }
-  /* Sur mobile, le rond est centré sur le visage */
-  .hero .photo img { position: absolute; width: 250%; height: auto; max-width: none; left: -122%; top: -14%; }
+
   .grid--3, .grid { grid-template-columns: minmax(0, 1fr); gap: 44px; }
   .xp-list li, .entry { grid-template-columns: minmax(0, 1fr); }
   .steps { grid-template-columns: minmax(0, 1fr); gap: 24px; }
@@ -409,7 +409,10 @@ ul.materiel li { display: inline-block; font-size: 13px; padding: 6px 9px; borde
   .form .row { grid-template-columns: minmax(0, 1fr); }
   .cv-head { grid-template-columns: minmax(0, 1fr); }
   .cv-photo { order: -1; width: 104px; aspect-ratio: 1; border-radius: 50%; }
-  .cv-photo img { position: absolute; width: 250%; height: auto; max-width: none; left: -122%; top: -14%; }
+  .hero .photo img, .cv-photo img { position: absolute; max-width: none; object-fit: fill;
+    width: calc(var(--zoom) * 100%); height: calc(var(--zoom) * var(--ratio) * 100%);
+    left: calc(50% - var(--fx) * var(--zoom) * 100%); top: calc(50% - var(--fy) * var(--zoom) * var(--ratio) * 100%); }
+
   .langs li { grid-template-columns: 120px minmax(0, 1fr) 28px; }
   .skill-groups { grid-template-columns: minmax(0, 1fr); }
   .filters label, .filters select { width: 100%; }
